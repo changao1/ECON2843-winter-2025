@@ -4,3 +4,16 @@
 *.ptx
 *.cubin
 *.fatbin
+.Rhistory
+.DS_Store
+*.bbl
+*.aux
+*.blg
+*.log
+*.out
+*.gz
+*.eps
+*.synctex(busy)
+*.bcf
+*.xml
+*.iml
