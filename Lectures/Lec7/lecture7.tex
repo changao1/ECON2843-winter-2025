@@ -1,0 +1,827 @@
+\documentclass[12pt]{beamer}
+\usetheme{Boadilla}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{tikz}
+\newcommand{\E}{\mathbb{E}}
+\usefonttheme{professionalfonts}
+\usepackage{pgfplots}
+\renewcommand{\arraystretch}{1.25}
+\usetikzlibrary{trees}
+\title[ECON2843]{Lecture 7}
+\subtitle{Part 2 Probability and Distributions}
+\date{}
+\usepackage{amsmath,amssymb,mathtools,wasysym}
+\begin{document}
+	\begin{frame}
+		\titlepage
+	\end{frame}
+
+	\begin{frame}
+	Combination and permutation formula: A different approach for probability
+\end{frame}		
+		% Slide 1: Introduction to Combination
+		\begin{frame}
+			\frametitle{Combination}
+			Question: Number of ways to select 3 people from a group of 10 to form a committee.
+			
+			\begin{itemize}
+				\item[\color{blue}$\blacktriangleright$] A combination is a selection of items from a collection, where the order does not matter.
+				\item[\color{blue}$\blacktriangleright$] It represents the number of ways to choose k items from n distinct elements.
+				\item[\color{blue}$\blacktriangleright$] Denoted as $C(n,k)$ or $\binom{n}{k}$.
+			\end{itemize}
+			
+		\end{frame}
+		
+		% Slide 2: Combination Formula and Example
+		\begin{frame}
+			\frametitle{Combination Formula}
+			
+			\begin{equation*}
+				C(n,k) = \binom{n}{k} = \frac{n!}{k!(n-k)!}
+			\end{equation*}
+			
+			\vspace{0.5cm}
+			
+			\textbf{Example:} Number of ways to select 3 people from a group of 10 to form a committee.
+			
+			\begin{equation*}
+				C(10,3) = \frac{10!}{3!(10-3)!} = \frac{10!}{3!7!} = 120
+			\end{equation*}
+			
+		\end{frame}
+		
+		% Slide 3: Introduction to Permutation
+		\begin{frame}
+			\frametitle{Permutation}
+			Question: Number of ways to select and arrange 3 people from a group of 10 (e.g., as president, vice-president, secretary).
+			\begin{itemize}
+				\item[\color{blue}$\blacktriangleright$]A permutation is an arrangement of objects where order matters.
+				\item[\color{blue}$\blacktriangleright$]It represents the number of ways to arrange $k$ items from $n$ distinct elements.
+				\item[\color{blue}$\blacktriangleright$]Denoted as $P(n,k)$ or $_nP_k$.
+			\end{itemize}
+			
+		\end{frame}
+		
+		% Slide 4: Permutation Formula and Example
+		\begin{frame}
+			\frametitle{Permutation Formula}
+			
+			\begin{equation*}
+				P(n,k) = \frac{n!}{(n-k)!}
+			\end{equation*}
+			
+			\vspace{0.5cm}
+			
+			\textbf{Example:} Number of ways to select and arrange 3 people from a group of 10 (e.g., as president, vice-president, secretary).
+			
+			\begin{equation*}
+				P(10,3) = \frac{10!}{(10-3)!} = \frac{10!}{7!} = 720
+			\end{equation*}
+			
+		\end{frame}
+		
+		% Slide 5: Examples with Colored Balls
+		\begin{frame}
+			\frametitle{Examples with Colored Balls}
+			
+			Suppose we have a box containing 5 red balls, 4 blue balls, and 3 green balls.
+			\begin{itemize}
+	\item \textcolor{red}{Question 1:} What is the probability of drawing 3 balls, one of each color?
+	
+	\item \textcolor{blue}{Question 2:} What is the probability of drawing 4 balls with at least one green ball?
+\end{itemize}
+			\end{frame}
+				\begin{frame}
+			\frametitle{Examples with Colored Balls}
+			
+			Suppose we have a box containing 5 red balls, 4 blue balls, and 3 green balls.
+			
+			\begin{itemize}
+				\item \textcolor{red}{Question 1:} What is the probability of drawing 3 balls, one of each color?
+				\[\frac{C(5,1) \cdot C(4,1) \cdot C(3,1)}{C(12,3)} = \frac{5 \cdot 4 \cdot 3}{220} = \frac{60}{220} = \frac{3}{11}\]
+				
+				\item \textcolor{blue}{Question 2:} What is the probability of drawing 4 balls with at least one green ball?
+				\[1 - \frac{C(9,4)}{C(12,4)} = 1 - \frac{126}{495} = \frac{369}{495} = \frac{41}{55}\]
+			\end{itemize}
+			
+		\end{frame}
+	\begin{frame}
+Let's continue our discussion about distribution.
+\end{frame}
+	\begin{frame}
+		\frametitle{Variance}
+		
+		\begin{itemize}
+			\item[\color{blue}$\blacktriangleright$] Let $X$ be a discrete random variable with probability distribution $p(x)$ and $\mu = E(X)$.
+			\item[\color{blue}$\blacktriangleright$] The (population) variance of $X$ is defined as:
+			
+			\[
+			\sigma^2 = V(X) = E((X-\mu)^2) = \sum_{\text{all }x} ((x-\mu)^2 \times p(x))
+			\]
+			
+			\item[\color{blue}$\blacktriangleright$] A shortcut formula for the variance is given below:
+			
+			\[
+			V(X) = E(X^2) - (E(X))^2
+			\]
+			
+			\[
+			= \left(\sum_{\text{all }x} (x^2 \times p(x))\right) - \mu^2
+			\]
+			
+		\end{itemize}
+		
+	\end{frame}
+\begin{frame}{Variance and Standard Deviation Calculation}
+	\begin{center}
+		\begin{tabular}{ccccc}
+			\toprule
+			$x$&0&1&2&3\\
+			\toprule
+			$p(x)$&$\frac{1}{8}$&$\frac{3}{8}$&$\frac{3}{8}$&$\frac{1}{8}$\\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+
+\begin{align*}
+	V(X) &= \left(\sum_{\text{all }x} (x^2 \times p(x))\right) - \mu^2 \\[1ex]
+	&= \left(0^2 \times \frac{1}{8} + 1^2 \times \frac{3}{8} + 2^2 \times \frac{3}{8} + 3^2 \times \frac{1}{8}\right) - 1.5^2 \\[1ex]
+	&= 0.75 \\[2ex]
+	SD(X) &= \sqrt{V(X)} = \sqrt{0.75} = 0.866 = \sigma
+\end{align*}
+\end{frame}
+\begin{frame}{Laws of Variance}
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] If $X$ and $Y$ are random variables (discrete or continuous) and $c$ is any constant, then:
+		\begin{align*}
+			1. & \quad V(c)=0 \\
+			2. & \quad V(cX)=c^2V(X)\\
+			3. & \quad V(X+c)=V(X)\\
+		\end{align*}
+		\item[\color{blue}$\blacktriangleright$] And if $X$ and $Y$ are independent, then:
+		$$4. \quad V(X+Y)=V(X)+V(Y)$$
+		$$5. \quad V(X-Y)=V(X)+V(Y)$$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Example}
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] Let $Z = 3X - 2Y -7$ with $V(X) = 2, V(Y) = 1$ and $X$ and $Y$ independent. Then:
+	\end{itemize}
+	
+	\begin{align*}
+		V(Z) &= V(3X - 2Y - 7)\\
+		&=  V(3X - 2Y)\\
+		&= V(3X)+V(2Y)\\
+		&= 9V(X)+4V(Y)\\
+		&= 9\times2+4\times1\\
+		&=22
+	\end{align*}
+\end{frame}
+\begin{frame}{Bivariate Distribution}
+	
+\begin{itemize}
+\item[\color{blue}$\blacktriangleright$] If $X$ and $Y$ are discrete random variables, then the \textbf{bivariate distribution} of $X$ and $Y$ is a table or formula that lists the joint probabilities
+		
+		$P(\{X = x\} \cap \{Y = y\})$, denoted $p(x,y)$, for all pairs of $x$ and $y$.
+		
+\item[\color{blue}$\blacktriangleright$] A bivariate distribution must satisfy two requirements:
+\end{itemize}
+
+\begin{enumerate}[label=\textcolor{blue}{\arabic*.}]
+	\item $0 \leq p(x,y) \leq 1$ for all $x$ and $y$
+	\item $\sum_{\text{all }x} \sum_{\text{all }y} p(x,y) = 1$
+\end{enumerate}
+
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]Flip a coin three times.
+		\item[\color{blue}$\blacktriangleright$]Let $X$ be the number of heads.
+		\item[\color{blue}$\blacktriangleright$]Let $Y$ be the number of sequence changes within the three flips, i.e., the number of times we change from $H \Rightarrow T$ or $T \Rightarrow H$.
+		\item[\color{blue}$\blacktriangleright$]For example:
+		\begin{itemize}
+			\item[\color{blue}$\blacktriangleright$]$HHH$: $x = 3$ (3 heads) and $y = 0$ (0 sequence changes since $H \Rightarrow H \Rightarrow H$).
+			\item[\color{blue}$\blacktriangleright$]$HHT$: $x = 2$ (2 heads) and $y = 1$ (1 sequence change since $H \Rightarrow H \Rightarrow T$).
+			\item[\color{blue}$\blacktriangleright$]$HTH$: $x = 2$ (2 heads) and $y = 2$ (2 sequence changes since $H \Rightarrow T \Rightarrow H$).
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}{Example}
+	
+	\begin{center}
+		\begin{tabular}{ccc}
+			\toprule
+			Outcome&$x$&$y$\\
+			\hline
+			HHH&3&0\\
+			HHT&2&1\\
+			HTH&2&2\\
+			THH&2&1\\
+			TTH&1&1\\
+			THT&1&2\\
+			HTT&1&1\\
+			TTT&0&0\\
+			\bottomrule
+		\end{tabular}
+		
+	\end{center}
+	
+\end{frame}
+
+\begin{frame}{Example}
+
+\[
+\begin{array}{cc|ccc|c}
+	\toprule
+	\multicolumn{6}{c}{y}\\
+	&& 0 & 1 & 2 & \\
+	\midrule
+	&0 & \frac{1}{8} & 0 & 0 & \frac{1}{8} \\[1ex]
+	x&1 & 0 & \frac{2}{8} & \frac{1}{8} & \frac{3}{8} \\[1ex]
+	&2 & 0 & \frac{2}{8} & \frac{1}{8} & \frac{3}{8} \\[1ex]
+	&3 & \frac{1}{8} & 0 & 0 & \frac{1}{8} \\
+	\midrule
+	&& \frac{2}{8} & \frac{4}{8} & \frac{2}{8} & 1 \\
+	\bottomrule
+\end{array}
+\]
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Marginal Probability Distribution}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]Just like we did in past class, we can calculate marginal probabilities for $X$ and $Y$ by adding across the rows and down the columns, respectively.
+		
+		\item[\color{blue}$\blacktriangleright$]Specifically, given $p(x,y)$ (the bivariate distribution of $X$ and $Y$), the \textbf{marginal probability distribution} of $X$ is:
+		
+		\begin{equation*}
+			p_X(x) = P(X = x) = \sum_{\text{all }y} p(x,y)
+		\end{equation*}
+		
+	\end{itemize}
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Marginal Probability Distribution}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]So for our example,
+		
+		\[
+		p_X(1) = P(X = 1) = p(1,0) + p(1,1) + p(1,2) = \frac{3}{8}
+		\]
+		
+		\item[\color{blue}$\blacktriangleright$]Considering $Y$ for the moment, notice that the events $\{Y = 0\}$, $\{Y = 1\}$ and $\{Y = 2\}$ are a \emph{partition} of the sample space!
+		
+		\item[\color{blue}$\blacktriangleright$]So, calculating a marginal probability distribution is just a direct consequence of the \emph{Law of Total Probability}.
+		
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Marginal Probability Distribution}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]The marginal distribution of $X$ is:
+		
+			\begin{center}
+			\begin{tabular}{ccccc}
+				\toprule
+				$x$&0&1&2&3\\
+				\toprule
+				$p_X(x)$&$\frac{1}{8}$&$\frac{3}{8}$&$\frac{3}{8}$&$\frac{1}{8}$\\
+				\bottomrule
+			\end{tabular}
+		\end{center}
+		
+		\item[\color{blue}$\blacktriangleright$]The marginal distribution of $Y$ is:
+		
+		\begin{center}
+			\begin{tabular}{cccc}
+				\toprule
+				$y$&0&1&2\\
+				\toprule
+				$p_Y(y)$&$\frac{2}{8}$&$\frac{4}{8}$&$\frac{2}{8}$\\
+				\bottomrule
+			\end{tabular}
+		\end{center}
+		
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Independence of Random Variables}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]Two discrete random variables, $X$ and $Y$, are \textbf{independent} if and only if
+		
+		\[
+		p(x,y) = p_X(x) \times p_Y(y)
+		\]
+		
+		for all $x$ and $y$.
+		
+		\item[\color{blue}$\blacktriangleright$]Note that this has to be true for \emph{all} $x$ and $y$. If there is just \emph{one} pair of $x$ and $y$ for which the above is not true, then $X$ and $Y$ are \textbf{not} independent.
+		
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]In our previous coin flipping example, $X$ and $Y$ are clearly not independent since if we consider the pair $x = 0$ and $y = 0$:
+		
+		\[
+		p(0,0) = \frac{1}{8}
+		\]
+		
+		but
+		
+		\[
+		p_X(0) \times p_Y(0) = \frac{1}{8} \times \frac{2}{8} = \frac{1}{32}
+		\]
+		
+		\item[\color{blue}$\blacktriangleright$]That is, we have found one pair for which
+		
+		\[
+		p(x,y) \neq p_X(x) \times p_Y(y)
+		\]
+		
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Sum of Two Random Variables}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] Consider two real estate agents, Albert and Bob.
+		\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]Let $X$ be the number of houses sold by Albert in a week.
+		\item[\color{blue}$\blacktriangleright$]Let $Y$ be the number of houses sold by Bob in a week.
+			\end{itemize}
+	\end{itemize}
+	
+\[
+\begin{array}{cc|ccc|c}
+	\toprule
+	\multicolumn{6}{c}{x}\\
+	&& 0 & 1 & 2 &P_Y(y) \\
+	\midrule
+	&0 & 0.12 & 0.42 & 0.06 & 0.6\\[1ex]
+	y&1 & 0.21 & 0.06& 0.03 & 0.3\\[1ex]
+	&2 & 0.07& 0.02 & 0.01 & 0.1 \\
+	\midrule
+	P_X(x)&&0.4& 0.5& 0.1& 1 \\
+	\bottomrule
+\end{array}
+\]
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Sum of Two Random Variables}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] From the marginal probability distributions of $X$ and $Y$, it is straightforward to calculate the following:
+		\begin{itemize}
+			\item[\color{blue}$\blacktriangleright$] $\E(X) = 0.7$
+			\item[\color{blue}$\blacktriangleright$] $V(X) = 0.41$
+			\item[\color{blue}$\blacktriangleright$] $\E(Y) = 0.5$
+			\item[\color{blue}$\blacktriangleright$] $V(Y) = 0.45$
+		\end{itemize}
+		\item[\color{blue}$\blacktriangleright$] Suppose we are interested in the \emph{total} number of houses Albert and Bob sell in a week.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Sum of Two Random Variables}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] That is, we are interested in the quantity $X + Y$, which itself is a random variable.
+		
+		\item[\color{blue}$\blacktriangleright$] From the bivariate distribution table, we know the possible values of $X + Y$ are $0, 1, 2, 3$ or $4$.
+		
+		\item[\color{blue}$\blacktriangleright$] Suppose we want to find the probability that a total of two houses were sold in a week, i.e., 
+		$P(X + Y = 2)$.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Sum of Two Random Variables}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] From the table, we can find $P(X + Y = 2)$ by summing up all the joint probabilities for the values of $x$ and $y$ which give $x + y = 2$.
+		\item[\color{blue}$\blacktriangleright$] That is,
+	\end{itemize}
+	
+	\vspace{0.5cm}
+	
+	\begin{align*}
+		P(X + Y = 2) &= p(0, 2) + p(1, 1) + p(2, 0) \\
+		&= 0.07 + 0.06 + 0.06 \\
+		&= 0.19\\
+	\end{align*}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Sum of Two Random Variables}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] We can repeat this for $X + Y = 0, 1, 3$ and $4$ to obtain the probability distribution for $X + Y$:
+	\end{itemize}
+	
+	\vspace{0.3cm}
+	
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|}
+			\hline
+			$x + y$ & 0 & 1 & 2 & 3 & 4 \\
+			\hline
+			$p(x + y)$ & 0.12 & 0.63 & 0.19 & 0.05 & 0.01 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	\vspace{0.3cm}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] From this we can calculate the mean and variance of $X + Y$:
+		\begin{itemize}
+			\item $E(X + Y) = 1.2$
+			\item $V(X + Y) = 0.56$
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Functions of Two Random Variables}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] Note that we could use the same approach to calculate the probability distribution of any function of two discrete random variables.
+		\item[\color{blue}$\blacktriangleright$] For example:
+		\begin{itemize}
+			\item[\color{blue}$\blacktriangleright$] $g(X,Y) = XY$
+			\item[\color{blue}$\blacktriangleright$] $g(X,Y) = \sqrt{XY^3}$
+			\item[\color{blue}$\blacktriangleright$] $g(X,Y) = \frac{X}{Y+1}$
+			\item[\color{blue}$\blacktriangleright$] etc.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{Expected Value}
+
+\begin{itemize}
+\item[\color{blue}$\blacktriangleright$]If $X$ and $Y$ are two discrete random variables with bivariate distribution $p(x,y)$ and $g(X,Y)$ is some function of $X$ and $Y$, the \textbf{expected value} of $g(X,Y)$ is given by:
+\end{itemize}
+\[
+E(g(X,Y)) = \sum_{\text{all }x} \sum_{\text{all }y} (g(x,y) \times p(x,y))
+\]
+\end{frame}
+\begin{frame}
+	\frametitle{Covariance}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]Let $X$ and $Y$ be discrete random variables with joint probability distribution $p(x,y)$.
+		\item[\color{blue}$\blacktriangleright$]If we denote $E(X) = \mu_X$ and $E(Y) = \mu_Y$, then the \textbf{(population) covariance} between $X$ and $Y$ is:
+	\end{itemize}
+	
+	\vspace{0.5em}
+	
+	\begin{align*}
+		\sigma_{XY} &= Cov(X,Y) \\
+		&= E((X - \mu_X)(Y - \mu_Y)) \\
+		&= \sum_{\text{all }x}\sum_{\text{all }y} ((x - \mu_X)(y - \mu_Y) \times p(x,y))
+	\end{align*}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Covariance}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]Just like with the variance, there is a shortcut formula for calculating the covariance:
+	\end{itemize}
+	
+	\vspace{0.5em}
+	
+	\begin{align*}
+		Cov(X,Y) &= E(XY) - E(X)E(Y) \\[1em]
+		&= \left(\sum_{\text{all }x}\sum_{\text{all }y} (xy \times p(x,y))\right) - \mu_X\mu_Y
+	\end{align*}
+	
+\end{frame}
+\begin{frame}{Correlation Coefficient}
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]The \textbf{(population) correlation coefficient} is defined in exactly the same way as before:
+		\[
+		\rho_{XY} = \frac{\sigma_{XY}}{\sigma_X \sigma_Y}
+		\]
+		\item[\color{blue}$\blacktriangleright$]Remember that the correlation always lies between $-1$ and $1$, i.e., $-1 \leq \rho_{XY} \leq 1$.
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\frametitle{Example}
+\begin{itemize}
+	\item[\color{blue}$\blacktriangleright$]Flip a coin three times.
+	\item[\color{blue}$\blacktriangleright$]$X$ is the number of heads, $Y$ is the number of sequence changes.
+	\item[\color{blue}$\blacktriangleright$]We know that:
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]$\mu_X=\frac{3}{2}$
+		\item[\color{blue}$\blacktriangleright$]$\sigma^2_X=\frac{3}{4}$
+		\item[\color{blue}$\blacktriangleright$]$\mu_Y=1$
+		\item[\color{blue}$\blacktriangleright$]$\sigma^2_Y=\frac{1}{2}$
+	\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+	\frametitle{Example}
+	\[
+	\begin{aligned}
+		Cov(X,Y) &= \left(\sum_{\text{all }x}\sum_{\text{all }y} (xy \times p(x,y))\right) - \mu_X\mu_Y \\[1em]
+		&= \left(0 \times 0 \times \frac{1}{8} + 1 \times 1 \times \frac{2}{8} + 1 \times 2 \times \frac{1}{8} \right. \\
+		&\quad \left. + 2 \times 1 \times \frac{2}{8} + 2 \times 2 \times \frac{1}{8} + 3 \times 0 \times \frac{1}{8}\right) \\[1em]
+		&\quad - \frac{3}{2} \times 1 \\[1em]
+		&= 0
+	\end{aligned}
+	\]
+\end{frame}
+\begin{frame}{Independence and Being Uncorrelated}
+
+\begin{itemize}
+	\item[\color{blue}$\blacktriangleright$]This implies $\rho_{XY} = 0$ so $X$ and $Y$ are \emph{uncorrelated}.
+	\item[\color{blue}$\blacktriangleright$]But remember we showed previously that $X$ and $Y$ were \emph{not} independent!
+	\item[\color{blue}$\blacktriangleright$]Independence and being uncorrelated are \emph{not} the same thing.
+	\item[\color{blue}$\blacktriangleright$]In fact, independence is a stronger condition than being uncorrelated.
+	\item[\color{blue}$\blacktriangleright$]Specifically, independence always implies a correlation of zero, whereas being uncorrelated does not always imply independence.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Linear Combination of Random Variables}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]The quantity $Z = aX + bY$, where $a$ and $b$ are constants, is called a \textbf{linear combination} of the random variables $X$ and $Y$.
+		\item[\color{blue}$\blacktriangleright$]It can be shown that:
+		
+		\begin{align*}
+			E(aX + bY) &= aE(X) + bE(Y) \\[1ex]
+			V(aX + bY) &= a^2V(X) + b^2V(Y) + 2ab \times Cov(X, Y) \\
+			&= a^2\sigma_X^2 + b^2\sigma_Y^2 + 2ab\rho_{XY}\sigma_X\sigma_Y
+		\end{align*}
+		
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Application in Finance: Portfolio Diversification}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]In finance, variance or standard deviation is often used to assess the risk of an investment.
+		\item[\color{blue}$\blacktriangleright$]Analysts reduce risk by diversifying their investments - that is, combining investments where the correlation is small.
+	\end{itemize}
+	
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Portfolio Diversification}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]An investor forms a portfolio by putting 25\% of his money in stock $A$ and 75\% in stock $B$, with population parameters given below.
+	\end{itemize}
+	
+	\vspace{0.5cm}
+	
+	\begin{table}
+		\centering
+		\begin{tabular}{lcc}
+			\toprule
+			& Expected & Standard \\
+			& Value of & Deviation of \\
+			& Return & Return \\
+			\midrule
+			Stock $A$ & 8\% & 12\% \\
+			Stock $B$ & 15\% & 22\% \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Expected Portfolio Return}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] Let $R_A$ and $R_B$ denote the returns of stocks $A$ and $B$, respectively.
+		\item[\color{blue}$\blacktriangleright$] If we let $R_P$ denote the return of the portfolio, then we can write:
+		\[
+		R_P = 0.25R_A + 0.75R_B
+		\]
+		\item[\color{blue}$\blacktriangleright$] We are given that $E(R_A) = 8$ and $E(R_B) = 15$.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}{Expected Portfolio Return}
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]Therefore, the expected value of $R_P$ is:
+	\begin{align*}
+		\E(R_P) &= \E(0.25 R_A + 0.75 R_B)\\
+		&= 0.25 \times E(R_A) + 0.75 \times E(R_B)\\
+		&= 0.25 \times 8 + 0.75 \times 15\\
+		&= 13.25\\
+	\end{align*}
+		\item[\color{blue}$\blacktriangleright$]That is, the expected portfolio return is 13.25\%.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Variance of Portfolio Return}
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]Calculate the variance when the two stock returns are perfectly positively correlated, i.e., $\rho_{AB} = 1$:
+		\begin{align*}
+		V(R_P) &= 0.25^2 \sigma_A^2 + 0.75^2 \sigma_B^2 + 2 \times 0.25 \times 0.75 \times \rho_{AB} \sigma_A \sigma_B\\
+		&= 0.25^2 \times 12^2 + 0.75^2 \times 22^2 + 2 \times 0.25 \times 0.75 \times \rho_{AB} \times 12 \times 22\\
+		&= 281.25 + 99 \times \rho_{AB}\\
+		&= 281.25 + 99 \times 1\\
+		&= 380.25\%^2\\
+	\end{align*}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Variance of Portfolio Return}
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]Calculate the variance when the two stock returns are perfectly uncorrelated, i.e., $\rho_{AB} = 0$:
+		\begin{align*}
+		V(R_P) &= 0.25^2 \sigma_A^2 + 0.75^2 \sigma_B^2 + 2 \times 0.25 \times 0.75 \times \rho_{AB} \sigma_A \sigma_B\\
+		&= 0.25^2 \times 12^2 + 0.75^2 \times 22^2 + 2 \times 0.25 \times 0.75 \times \rho_{AB} \times 12 \times 22\\
+		&= 281.25 + 99 \times \rho_{AB}\\
+		&= 281.25 + 99 \times 0\\
+		&= 281.25\%^2\\
+\end{align*}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bernoulli Trial}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] A \textbf{Bernoulli trial} is a random experiment that has the following special properties:
+		\begin{itemize}
+			\item[\color{blue}$\blacktriangleright$] On each trial there are only two possible outcomes, which we call success and failure.
+			\item[\color{blue}$\blacktriangleright$] On any given trial, the probability of a success is $p$ and the probability of a failure is $1 - p$.
+			\item[\color{blue}$\blacktriangleright$] The trials are independent - that is, the result of one trial does not affect the result of any other trial.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Binomial Distribution}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] If a fixed number, $n$, of Bernoulli trials are performed, the random variable representing the number of successes in the $n$ trials is called a \textbf{binomial random variable} and its probability distribution is called the \textbf{binomial distribution}.
+		
+		\item[\color{blue}$\blacktriangleright$] If $X$ denotes a binomial random variable, then we use the notation $X \sim Bin(n, p)$, where $p$ is the probability of success on any given trial.
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Some Examples}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] Flip a coin ten times and let $X$ be the number of heads.
+		\begin{itemize}
+			\item[\color{blue}$\blacktriangleright$] $X \sim Bin(n = 10, p = 0.5)$.
+		\end{itemize}
+		
+		\item[\color{blue}$\blacktriangleright$] Pull a card from a deck, with replacement, eight times and let $X$ be the number of clubs.
+		\begin{itemize}
+			\item[\color{blue}$\blacktriangleright$]$X \sim Bin(n = 8, p = 0.25)$.
+		\end{itemize}
+
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Binomial Probability Distribution}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]If $X \sim Bin(n, p)$ then the possible values that $X$ can take are $0, 1, 2, 3, \ldots, n$.
+		
+		\item[\color{blue}$\blacktriangleright$]The \textbf{binomial probability distribution} is given by the following formula:
+	\end{itemize}
+	
+	\vspace{0.5cm}
+	
+	\[
+	P(X = x) = \frac{n!}{x!(n - x)!}p^x(1 - p)^{n-x}
+	\]
+	
+	\vspace{0.5cm}
+	
+	Note that $n! = n \times (n - 1) \times (n - 2) \times \ldots \times 2 \times 1$.
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Expected Value and Variance}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]We could use the usual formula to calculate the expected value:
+	\end{itemize}
+	
+	\vspace{0.5cm}
+	
+	\begin{align*}
+		E(X) &= \sum_{\text{all }x} (x \times p(x)) \\[0.5em]
+		&= \sum_{x=0}^n \left(x \times \frac{n!}{x!(n-x)!}p^x(1-p)^{n-x}\right) \\[0.5em]
+		&= \ldots
+	\end{align*}
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]And similarly for the variance.
+		\item[\color{blue}$\blacktriangleright$]But we don't really want to.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Expected Value and Variance}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]Instead, let's define a new random variable for each Bernoulli trial as follows:
+		
+		\vspace{0.5cm}
+		\[
+		X_i = \begin{cases}
+			1 & \text{if trial } i \text{ is a success} \\
+			0 & \text{if trial } i \text{ is a failure}
+		\end{cases}
+		\]
+		\vspace{0.5cm}
+		
+	\item[\color{blue}$\blacktriangleright$]Each $X_i$ is called a \textbf{Bernoulli} or \textbf{indicator variable}.
+		
+		\item[\color{blue}$\blacktriangleright$]We know that the $X_i$ are independent and we also know that
+		
+		\vspace{0.3cm}
+		\[
+		X = \sum_{i=1}^n X_i
+		\]
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Expected Value and Variance}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$]Using the laws of expected value and variance:
+	\end{itemize}
+	
+	\vspace{0.5cm}
+	
+	\begin{align*}
+		E(X) &= E\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n E(X_i) = \sum_{i=1}^n p = np \\[1em]
+		V(X) &= V\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n V(X_i) = \sum_{i=1}^n p(1-p) = np(1-p)
+	\end{align*}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Example}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] A student sitting a statistics quiz decides to answer each of the ten multiple choice questions entirely by chance.
+		
+		\item[\color{blue}$\blacktriangleright$]Each question has five options, only one of which is correct.
+		
+		\item[\color{blue}$\blacktriangleright$]Let $X$ be the number of questions the student answers correctly.
+		
+		\item[\color{blue}$\blacktriangleright$]Then $X \sim Bin(n = 10, p = 0.2)$.
+	\end{itemize}
+	
+\end{frame}
+\end{document}

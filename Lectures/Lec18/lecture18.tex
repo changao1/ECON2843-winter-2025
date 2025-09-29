@@ -1,0 +1,618 @@
+\documentclass[12pt]{beamer}
+\usetheme{Boadilla}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{tikz}
+
+\newcommand{\E}{\mathbb{E}}
+\usefonttheme{professionalfonts}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\renewcommand{\arraystretch}{1.25}
+\usetikzlibrary{trees}
+\title[ECON2843]{Lecture 18}
+\subtitle{Part 4 Analysis of Variance}
+\date{}
+\usepackage{amsmath,amssymb,mathtools,wasysym}
+\begin{document}
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	\begin{frame}
+		\vspace{1cm}
+		\centering
+		{\color{blue}\large Analysis of Variance}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Which Tutor is the Best?}
+		
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Suppose there are four tutors for a course:
+			Mandy, Thomas, Jasmine and Bob.
+			\item Is there a difference in the teaching abilities of the
+			four tutors?
+			\item Let $\mu_j$ denote the population mean grade for
+			students in the $j$th tutor's class.
+		\end{itemize}
+		
+	\end{frame}
+\begin{frame}
+	\frametitle{Which Tutor is the Best?}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item What we are trying to test is the following hypotheses:
+		
+		\vspace{0.5em}
+		$H_0 : \mu_M = \mu_T = \mu_J = \mu_B$
+		
+		\vspace{0.5em}
+		$H_1 : \begin{cases}
+			\text{Not all population means are equal.} \\
+			\text{At least two population means differ.} \\
+			H_0 \text{ is false.}
+		\end{cases}$
+		
+		\item The above three statements for $H_1$ are \textit{equivalent}.
+		
+		\item Examine the average grade in each class and compare them.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Which Tutor is the Best?}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item What if we find that:
+	\end{itemize}
+	
+	\vspace{1em}
+	
+	\begin{center}
+		\begin{tabular}{lc}
+			\toprule
+			Tutor/Class & Average Grade \\
+			\midrule
+			Mandy & $\bar{Y}_M = 70.0\%$ \\
+			Thomas & $\bar{Y}_T = 70.2\%$ \\
+			Jasmine & $\bar{Y}_J = 69.9\%$ \\
+			Bob & $\bar{Y}_B = 70.4\%$ \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Which Tutor is the Best?}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item What if we find that:
+	\end{itemize}
+	
+	\vspace{1em}
+	
+	\begin{center}
+		\begin{tabular}{lc}
+			\toprule
+			Tutor/Class & Average Grade \\
+			\midrule
+			Mandy & $\bar{Y}_M = 60.0\%$ \\
+			Thomas & $\bar{Y}_T = 74.0\%$ \\
+			Jasmine & $\bar{Y}_J = 67.0\%$ \\
+			Bob & $\bar{Y}_B = 80.0\%$ \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Which Tutor is the Best?}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item It's the amount of variation in the average grades \textit{between} the classes that will help us determine whether or not we should reject $H_0$.
+		
+		\item But how much variation in average grades between classes should lead to a rejection of $H_0$?
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Which Tutor is the Best?}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item What if there is much variation in grades \textit{within} classes?
+	\end{itemize}
+	
+	\vspace{0.5em}
+	
+	\begin{center}
+		\small
+		\begin{tabular}{l*{10}{c}c}
+			\hline
+			Tutor & \multicolumn{10}{c}{Grades} & $\bar{Y}$ \\
+			\hline
+			Mandy & $60$ & $70$ & $40$ & $50$ & $40$ & $69$ & $51$ & $80$ & $45$ & $95$ & $60$ \\
+			Thomas & $64$ & $80$ & $70$ & $98$ & $49$ & $96$ & $95$ & $54$ & $74$ & $60$ & $74$ \\
+			Jasmine & $71$ & $45$ & $99$ & $50$ & $40$ & $79$ & $61$ & $85$ & $80$ & $60$ & $67$ \\
+			Bob & $90$ & $89$ & $86$ & $95$ & $79$ & $46$ & $81$ & $96$ & $84$ & $54$ & $80$ \\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Which Tutor is the Best?}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item What if there is very little variation in grades \textit{within} classes?
+	\end{itemize}
+	
+	\vspace{0.5em}
+	
+	\begin{center}
+		\small
+		\begin{tabular}{l*{10}{c}c}
+			\hline
+			Tutor & \multicolumn{10}{c}{Grades} & $\bar{Y}$ \\
+			\hline
+			Mandy & $58$ & $62$ & $60$ & $60$ & $60$ & $59$ & $61$ & $60$ & $58$ & $62$ & $60$ \\
+			Thomas & $74$ & $75$ & $70$ & $78$ & $71$ & $76$ & $75$ & $72$ & $74$ & $75$ & $74$ \\
+			Jasmine & $67$ & $65$ & $69$ & $70$ & $68$ & $69$ & $63$ & $65$ & $70$ & $64$ & $67$ \\
+			Bob & $80$ & $79$ & $78$ & $80$ & $79$ & $78$ & $81$ & $84$ & $83$ & $78$ & $80$ \\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Which Tutor is the Best?}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Whether or not we reject $H_0$ depends on the variation \textit{between} classes and the variation \textit{within} classes.
+		
+		\item The variation between classes represents variation arising from the different tutors and the variation within classes represents underlying variation that is not due to the different tutors.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Analysis of Variance}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item \textbf{Analysis of variance (ANOVA)} are methods that are used to test the hypothesis that the means of \textit{two or more} populations are equal.
+		
+		\item The methods involve taking independent samples from each population and analysing the \textit{amounts of variation} and the \textit{sources of the variation}.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{One-way ANOVA}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item In a one-way ANOVA, we have:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item One continuous response variable $Y$.
+			\item One categorical variable with $k$ categories.
+			\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+				\item The categorical variable is also called a \textbf{factor}.
+				\item Each category is called a \textbf{level} and there must be at least two levels ($k \geq 2$).
+			\end{itemize}
+		\end{itemize}
+		\item For our example:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item The student's grade is the continuous response variable.
+			\item The variable \textit{tutor} is a factor with four levels (Mandy, Thomas, Jasmine and Bob).
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{One-way ANOVA}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item For a one-way ANOVA, each level of the factor is also called a \textbf{treatment} and represents a population.
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item For example, Mandy is a treatment and all possible students who have ever been in Mandy's tutorial define a population.
+		\end{itemize}
+		
+		\item A one-way ANOVA tests for differences in the means of $k$ populations, where each population corresponds to a treatment (i.e., a level of the factor).
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{One-way ANOVA}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Said another way, a one-way ANOVA tests the importance of the factor in \textit{explaining the variation in the response variable}, by comparing the means of the response variable between the different treatments (levels of the factor).
+		
+		\item For our example:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item We want to test whether tutor is important in explaining the variation in grades, by comparing the sample mean grades of students in each tutor's class.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Sample Data}
+	
+	\begin{center}
+		\small
+		\begin{tabular}{cccccc}
+			\toprule
+			& \multicolumn{5}{c}{Factor Level or Treatment} \\
+			\cline{2-6}
+			& 1 & $\cdots$ & $j$ & $\cdots$ & $k$ \\
+			\midrule
+			& $Y_{11}$ & $\cdots$ & $Y_{1j}$ & $\cdots$ & $Y_{1k}$ \\
+			& $\vdots$ & & $\vdots$ & & $\vdots$ \\
+			Sample Values & $Y_{i1}$ & $\cdots$ & $Y_{ij}$ & $\cdots$ & $Y_{ik}$ \\
+			& $\vdots$ & & $\vdots$ & & $\vdots$ \\
+			& $Y_{n_11}$ & $\cdots$ & $Y_{n_jj}$ & $\cdots$ & $Y_{n_kk}$ \\
+			\hline
+			Sample Size & $n_1$ & $\cdots$ & $n_j$ & $\cdots$ & $n_k$ \\
+			\midrule
+			Sample Mean & $\bar{Y}_1$ & $\cdots$ & $\bar{Y}_j$ & $\cdots$ & $\bar{Y}_k$ \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Assumptions}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item When performing a one-way ANOVA, we must make the following assumptions:
+	\end{itemize}
+	
+	\begin{enumerate}[label=\arabic*.]
+		\item The levels of the factor are fixed beforehand.
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Assumed to be true based on experimental design.
+		\end{itemize}
+		
+		\item The response variable is normally distributed with constant variance in each treatment.
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Can construct histograms and calculate sample variances within each sample.
+		\end{itemize}
+		
+		\item The samples are independent.
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Can construct certain plots, but again assumed to be true based on experimental design.
+		\end{itemize}
+	\end{enumerate}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Hypotheses}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item For a one-way ANOVA, we are testing:
+		
+		\begin{align*}
+			H_0 &: \text{The population means at different levels of} \\
+			&\phantom{:} \text{the factor are all equal.} \\
+			H_1 &: \text{At least two of the population means differ.}
+		\end{align*}
+		
+		\item If $H_0$ is true, the sample means from each level should be similar, i.e., little variation between the sample means.
+		
+		\item If $H_1$ is true, the sample means from each level should be quite different, i.e., lots of variation between the sample means.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Sum of Squares for Treatment}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item The variation between the sample means (or the variation \textit{between the treatments}) is measured by the \textbf{sum of squares for treatment} ($SST$):
+		
+		\begin{equation*}
+			SST = \sum_{j=1}^k n_j (\overline{Y}_j - \overline{Y})^2
+		\end{equation*}
+		
+		where $n_j$ and $\overline{Y}_j$ are the sample size and sample mean of the $j$th sample, respectively, and $\overline{Y}$ is the overall sample mean of \textbf{all} observations across all samples.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Sum of Squares for Treatment}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item The $SST$ measures the variation that is \textit{caused by} the factor.
+		
+		\item If the sample means are similar to each other, they will all be close to $\overline{Y}$, so the $SST$ will be small.
+		
+		\item If some of the sample means differ from each other, they will be far from $\overline{Y}$, so the $SST$ will be large.
+		
+		\item How large does the $SST$ have to be before we reject the null hypothesis that all population means are equal?
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Sum of Squares for Error}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item To answer this question, we need to also know how much variation there is \textit{within the treatments}, which is measured by the \textbf{sum of squares for error} ($SSE$):
+		
+		\begin{equation*}
+			SSE = \sum_{j=1}^k \sum_{i=1}^{n_j} (Y_{ij} - \overline{Y}_j)^2
+		\end{equation*}
+		
+		where $Y_{ij}$ is the $i$th observation in the $j$th sample.
+		
+		\item The $SSE$ measures the variation that is \textit{not} caused by the factor and can be thought of as the underlying, unexplained variation.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Total Sum of Squares}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item There is one more sum of squares term called the \textbf{total sum of squares} ($SS(Total)$), which is defined to be:
+		
+		\begin{equation*}
+			SS(Total) = \sum_{j=1}^k \sum_{i=1}^{n_j} (Y_{ij} - \overline{Y})^2
+		\end{equation*}
+		
+		\item The $SS(Total)$ measures the \textit{total} amount of variation that exists in the data.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{$SST$, $SSE$ and $SS(Total)$}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item There is a special relationship between the sum of squares for treatment, the sum of squares for error and the total sum of squares, given by the following identity:
+		
+		\begin{equation*}
+			SS(Total) = SST + SSE
+		\end{equation*}
+		
+		\item That is, the total variation in the response variable $Y$ in the sample is equal to the variation that is explained by the factor \textit{plus} the left-over, unexplained variation.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Test Statistic}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Now that we have quantified these different sources of variation, we can construct a test statistic.
+		
+		\item We want to see how big the $SST$ is compared to the $SSE$.
+		
+		\item But we first have to convert these sums of squares to \textit{mean squares}, by scaling them by their appropriate \textit{degrees of freedom}:
+		
+		\begin{align*}
+			MST &= \frac{SST}{k - 1} \quad \text{and} \quad MSE = \frac{SSE}{n - k}
+		\end{align*}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Test Statistic}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item These mean squares are essentially sample variances and they are now more directly comparable to each other.
+		
+		\item So finally, the test statistic that we use is the ratio of the $MST$ to the $MSE$:
+		
+		\begin{equation*}
+			F = \frac{MST}{MSE}
+		\end{equation*}
+		
+		\item It is called the $F$-statistic or the $F$-ratio.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Test Statistic}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item If $H_0$ is true, then:
+		\begin{itemize}[label={\color{blue}$\Rightarrow$}]
+			\item The population means are equal,
+			\item the sample means should be similar to each other,
+			\item the $MST$ should be close to or less than the $MSE$,
+			\item the $F$-statistic should be close to or less than 1.
+		\end{itemize}
+		
+		\item If $H_1$ is true, then:
+		\begin{itemize}[label={\color{blue}$\Rightarrow$}]
+			\item The population means are different,
+			\item the sample means should differ from each other,
+			\item the $MST$ should be greater than the $MSE$,
+			\item the $F$-statistic should be greater than 1.
+		\end{itemize}
+		
+		\item So we reject $H_0$ when the $F$-statistic is too large, so this is a \textcolor{red}{one-tailed test}.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Decision Rule}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item To determine whether or not the $F$-statistic is too large, we need to know its sampling distribution under $H_0$ (null distribution).
+		
+		\item Since $F = \frac{MST}{MSE}$ is a ratio of two sample variances, we compare it to an $F$-distribution (recall testing the equality of two population variances).
+		
+		\item Specifically, an $F$-distribution with $k - 1$ numerator degrees of freedom and $n - k$ denominator degrees of freedom.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Decision Rule}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item So we need to use the $F$-tables.
+		
+		\item At a significance level of $\alpha$, we reject $H_0$ if $F > F_{\alpha,k-1,n-k}$, where $F_{\alpha,k-1,n-k}$ is the critical value that cuts off $100\alpha\%$ in the upper tail of an $F$-distribution with the appropriate degrees of freedom.
+		
+		\item Note that if we reject $H_0$, we can only conclude that at least two population means are different.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{ANOVA Table}
+	
+	\begin{table}
+		\centering
+		\begin{tabular}{ccccc}
+			\toprule
+			\multirow{2}{*}{Source} & Sum of & Deg. of & Mean& \multirow{2}{*}{$F$-statistic} \\
+			& squares & freedom & squares& \\
+			\midrule
+			Factor & $SST$ & $k-1$ & $MST = \frac{SST}{k-1}$ & $F = \frac{MST}{MSE}$ \\
+			(Treatments) & & & & \\
+			Error & $SSE$ & $n-k$ & $MSE = \frac{SSE}{n-k}$ & \\
+			\midrule
+			Total & $SS(Total)$ & $n-1$ & & \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{ANOVA Table}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item If we add up all the sum of squares for each source of variation, they will equal the total sum of squares, i.e., $SST + SSE = SS(Total)$.
+		
+		\item The degrees of freedom for the total sum of squares is \textit{always} equal to $n - 1$.
+		
+		\item If we add up all the degrees of freedom for each source of variation, they will sum to $n - 1$.
+		
+		\item Note that $n = \sum_{j=1}^k n_j$ is the total sample size.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Airline Ratings Example}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item There are three airlines that fly a particular route.
+		
+		\item Twenty passengers from each airline were randomly selected and asked about their flight experience.
+		
+		\item Particularly, they were asked to rate their experience on a 0 to 100 scale using various criteria such as meal service, comfort, friendliness, etc.
+		
+		\item The data is displayed in the following table.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Airline Ratings Example}
+	
+	\begin{table}
+		\centering
+		\begin{tabular}{cccccc}
+			\toprule
+			\multicolumn{6}{c}{Airline} \\
+			\multicolumn{2}{c}{1} & \multicolumn{2}{c}{2} & \multicolumn{2}{c}{3} \\
+			\midrule
+			52 & 61 & 36 & 70 & 50 & 74 \\
+			33 & 57 & 36 & 74 & 80 & 65 \\
+			36 & 46 & 50 & 63 & 50 & 62 \\
+			54 & 47 & 46 & 81 & 45 & 67 \\
+			40 & 53 & 48 & 54 & 76 & 81 \\
+			39 & 55 & 66 & 61 & 61 & 83 \\
+			41 & 78 & 41 & 71 & 51 & 61 \\
+			36 & 65 & 43 & 76 & 44 & 97 \\
+			22 & 64 & 37 & 76 & 57 & 92 \\
+			26 & 64 & 45 & 53 & 75 & 68 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Airline Ratings Example}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Given this sample data, suppose you have calculated that $SS(Total) = 16011.25$ and $SST = 3446.8$.
+		
+		\item Using these figures, determine whether there is sufficient evidence to conclude that the population mean ratings differ between airlines.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Airline Ratings Example}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item To answer this question we need to:
+	\end{itemize}
+	
+	\begin{enumerate}[label=\color{blue}\arabic*.]
+		\item Write down $H_0$ and $H_1$.
+		\item Complete a one-way ANOVA table to calculate the test statistic.
+		\item Determine the appropriate decision rule.
+		\item Reach a conclusion regarding whether the population mean ratings differ between airlines.
+	\end{enumerate}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{1. Hypotheses}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Let $\mu_1$, $\mu_2$ and $\mu_3$ denote the population mean ratings for the three airlines.
+		\item The null and alternative hypotheses are:
+	\end{itemize}
+	
+	\vspace{0.5cm}
+	
+	$H_0 : \begin{cases} 
+		\mu_1 = \mu_2 = \mu_3 \\
+		\text{That is, the population mean rating for} \\
+		\text{each airline is the same.}
+	\end{cases}$
+	
+	\vspace{0.5cm}
+	
+	$H_1 :$ At least two population mean ratings differ.
+	
+\end{frame}
+\begin{frame}
+	\frametitle{2. ANOVA Table and Test Statistic}
+	
+	\begin{table}
+		\centering
+		\begin{tabular}{ccccc}
+			\toprule
+			\multirow{2}{*}{Source} & Sum of & Deg. of & Mean& \multirow{2}{*}{$F$-statistic} \\
+			& squares & freedom & squares& \\
+			\midrule
+			Airline & 3446.8 & 2 & 1723.4 & 7.8184 \\
+			Error & 12564.45 & 57 & 220.4289 & \\
+			\midrule
+			Total & 16011.25 & 59 & & \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{3. Decision Rule}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item We compare our test statistic to an $F$-distribution with $k-1 = 2$ numerator degrees of freedom and $n-k = 57$ denominator degrees of freedom.
+		
+		\item At a 5\% significance level, we will reject $H_0$ if the test statistic is larger than
+		\[ F_{0.05,2,57} \approx F_{0.05,2,60} = 3.15. \]
+		
+		\item At a 1\% significance level, we will reject $H_0$ if the test statistic is larger than
+		\[ F_{0.01,2,57} \approx F_{0.01,2,60} = 4.98. \]
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{4. Conclusion}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Since our test statistic, $F = 7.8184$ is larger than 4.98, we reject $H_0$ at a significance level of $\alpha = 0.01$.
+		
+		\item That is, there is sufficient evidence to conclude that the population mean ratings differ between airlines.
+		
+		\item Note that we would also reject $H_0$ at a significance level of $\alpha = 0.05$.
+	\end{itemize}
+	
+\end{frame}
+\end{document}

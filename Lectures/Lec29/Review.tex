@@ -1,0 +1,367 @@
+\documentclass[12pt]{beamer}
+\usetheme{Boadilla}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage[normalem]{ulem} 
+\newcommand{\E}{\mathbb{E}}
+\usefonttheme{professionalfonts}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\renewcommand{\arraystretch}{1.25}
+\usetikzlibrary{trees}
+\title[ECON2843]{Lecture 29}
+\subtitle{Review Session}
+\date{}
+\usepackage{amsmath,amssymb,mathtools,wasysym}
+\begin{document}
+	\begin{frame}
+		\titlepage
+		
+	\end{frame}
+	\begin{frame}
+		\frametitle{Here is the Plan for Final Weeks}
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item This week
+			\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Tuesday: Last class, review session and some announcement
+			\item Thursday: No class, Q \& A session in Room 236, Cate Center 1 during regular class time.
+			\end{itemize}
+			\item Next Week
+			\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+				\item Tuesday: No class, Q \& A session in Room 236, Cate Center 1 from 1:30pm - 2:30pm.
+				\item Wednesday 12:30pm - 6:30pm, window for the optional final exam.
+			\end{itemize}
+				\end{itemize}
+
+	\end{frame}
+	
+		\begin{frame}
+		\frametitle{Clarification on Optional Final Exam}
+{\large\color{red} It is truly optional!}
+			\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+				\item Calculate your grades in the following manner:
+				\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+					\item Take the arithmetic mean of your highest 15 out of the 18 assignments.
+					\item For assignment with technical issues, make sure confirm with me through email about excluding it.
+					\item For assignments with technical issues, you can calculate the grade by taking the arithmetic mean of your highest $15-x$ out of the $18-x$ assignments, where $x$ is number of  assignments with issues (that you have confirmed with me).
+					
+				\end{itemize}
+
+				
+					\end{itemize}
+			
+			\end{frame}
+					\begin{frame}
+					\frametitle{Clarification on Optional Final Exam}
+			Take the optional final if
+			\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+				\item You are not happy with the current cumulative grade.
+				\item You are interested in taking it.
+				\item In the end, I will take the higher one between your assignments average and optional final.
+			\end{itemize}
+
+	\end{frame}
+	\begin{frame}
+		\frametitle{About the Optional Final Exam Format}
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item It will be given between 12:30pm - 6:30pm on December 11th, which is next Wednesday.
+			\item It has 30-35 T/F and multiple choices questions.
+			\item You have 100 minutes to complete it.
+			\item Covers material until multiple linear regression.
+			\item You can start at any time between 12:30pm - 4:50pm, after 4:50pm might be too late.
+			\item Open book exam, it is similar to the quizzes except the length.
+		\end{itemize}
+		
+	\end{frame}
+	\begin{frame}
+	\frametitle{Curve and Attendance Policy}
+	Curving
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item As mentioned in syllabus, I will curve the median grade to 90 if it is below 90.
+		\item I will do the curving by moving the bell shape grade distribution toward right.
+	\end{itemize}
+	Attendance
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+	\item I won't deduct your marks for missing classes.
+\item I will add marks in calculating letter grades for those show up in classes.
+	\end{itemize}
+
+\end{frame}
+	\begin{frame}
+	\frametitle{The Course Reflection Survey}
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+\item I'd like to ask you to do me a favor. If possible, could you please help me with the Course Reflection Survey? It is due by this Sunday.
+
+\item Then I will know where I should improve.
+
+\item Thank you!
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\frametitle{Data Types and Statistics}
+	\[
+	\begin{array}{l}
+		\text{Data} 
+		\left\{
+		\begin{array}{l}
+			\text{Categorical}
+			\left\{
+			\begin{array}{l}
+				\text{nominal} \\[1ex]
+				\text{ordinal}
+			\end{array}
+			\right. \\[2ex]
+			\text{Numerical}
+			\left\{
+			\begin{array}{l}
+				\text{discrete} \\[1ex]
+				\text{continuous}
+			\end{array}
+			\right.
+		\end{array}
+		\right. \\[4ex]
+		\text{Population - parameters}\ \text{\scriptsize(unknown)}
+		\left\{
+		\begin{array}{l}
+			\text{mean} \\
+			\text{variance}
+		\end{array}
+		\right. \\[3ex]
+		\text{Sample - statistics}\ \text{\scriptsize(calculated)}
+		\left\{
+		\begin{array}{l}
+			\text{mean} \\
+			\text{variance}
+		\end{array}
+		\right.
+	\end{array}
+	\]
+\end{frame}
+\begin{frame}
+	\frametitle{Hypothesis Testing}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Define your null ($H_0$) and alternative ($H_1$) hypotheses.
+		
+		\item Calculate an appropriate test statistic.
+		
+		\item Based on the sampling distribution of the test statistic under $H_0$, reject $H_0$ if the observed test statistic is extreme (using rejection regions or $p$-values).
+		
+		\item Reject $H_0$ if your test statistic falls in the rejection region or if your $p$-value is less than $\alpha$.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Single Population}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Testing $\mu$ when $\sigma^2$ known:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Calculate $Z$-statistic.
+			\item Compare to $N(0,1)$ distribution.
+			\item One or two-tailed depending on $H_1$.
+		\end{itemize}
+		
+		\item Testing $\mu$ when $\sigma^2$ unknown:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Calculate $T$-statistic.
+			\item Compare to $t$-distribution with $n-1$ degrees of freedom.
+			\item One or two-tailed depending on $H_1$.
+		\end{itemize}
+		
+		\item Testing a population proportion $p$:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Calculate $Z$-statistic.
+			\item Compare to $N(0,1)$ distribution.
+			\item One or two-tailed depending on $H_1$.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Comparing Two Populations}
+	\framesubtitle{Independent Samples}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Testing $\mu_1 - \mu_2$ when $\sigma_1^2$, $\sigma_2^2$ known:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Calculate $Z$-statistic.
+			\item Compare to $N(0,1)$ distribution.
+			\item One or two-tailed depending on $H_1$.
+		\end{itemize}
+		
+		\item Testing $\mu_1 - \mu_2$ when $\sigma_1^2$, $\sigma_2^2$ unknown and $\sigma_1^2 = \sigma_2^2$:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Calculate pooled sample variance $s_p^2$.
+			\item Calculate $T$-statistic.
+			\item Compare to $t$-distribution with $n_1 + n_2 - 2$ degrees of freedom.
+			\item One or two-tailed depending on $H_1$.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Comparing Two Populations}
+	\framesubtitle{Independent Samples}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Testing $H_0 : \sigma_1^2 = \sigma_2^2$ vs $H_1 : \sigma_1^2 \neq \sigma_2^2$:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Calculate $F$-statistic (put larger sample variance on top).
+			\item Compare to $F$-distribution with $n_1 - 1$ numerator degrees of freedom and $n_2 - 1$ denominator degrees of freedom ($n_1$ is the sample size corresponding to the larger sample variance).
+			\item Two-tailed, but only need to look at upper tail of $F$-distribution.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Comparing Two Populations}
+	\framesubtitle{Paired Samples}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Testing $\mu_D$:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Calculate paired differences (remember to set up hypotheses appropriately).
+			\item Calculate $T$-statistic.
+			\item Compare to $t$-distribution with $n - 1$ degrees of freedom.
+			\item One or two-tailed depending on $H_1$.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Comparing Two Populations}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Testing $H_0 : p_1 - p_2 = D_0$ for $D_0 \neq 0$:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Calculate $Z$-statistic.
+			\item Compare to $N(0,1)$ distribution.
+			\item One or two-tailed depending on $H_1$.
+		\end{itemize}
+		
+		\item Testing $H_0 : p_1 - p_2 = 0$:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Calculate combined proportion $\hat{p}$.
+			\item Calculate $Z$-statistic.
+			\item Compare to $N(0,1)$ distribution.
+			\item One or two-tailed depending on $H_1$.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{ANOVA}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Calculate sums of squares, degrees of freedom and mean squares for each source of variation.
+		
+		\item Calculate $F$-statistic.
+		
+		\item Compare to $F$-distribution with numerator degrees of freedom equal to the factor or interaction degrees of freedom, and denominator degrees of freedom equal to the error degrees of freedom.
+		
+		\item One-tailed, reject when $F$-statistic is too large.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Simple Linear Regression}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Testing overall significance of model:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item That is, testing $H_0 : \beta_1 = 0$ vs $H_1 : \beta_1 \neq 0$.
+			\item Calculate $T$-statistic.
+			\item Compare to $t$-distribution with $n-2$ degrees of freedom.
+			\item Two-tailed.
+			\item Can also test overall significance of model by testing $H_0 : \rho = 0$ vs $H_1 : \rho \neq 0$.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Simple Linear Regression}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item General tests for $\beta_0$ and $\beta_1$:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Calculate $T$-statistic.
+			\item Compare to $t$-distribution with $n-2$ degrees of freedom.
+			\item One or two-tailed depending on $H_1$.
+			\item May not be able to use $p$-value given in computer output, since this is the $p$-value for testing $H_0 : \beta_j = 0$ vs $H_1 : \beta_j \neq 0$, for $j = 0,1$.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Multiple Linear Regression}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Testing overall significance of model:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Calculate sums of squares, degrees of freedom and mean squares.
+			\item Calculate $F$-statistic.
+			\item Compare to $F$-distribution with $k$ numerator degrees of freedom and $n-k-1$ denominator degrees of freedom, where $k$ is the number of independent variables in the model.
+			\item One-tailed, reject when $F$-statistic is too large.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Multiple Linear Regression}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Testing individual coefficient parameters:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Calculate $T$-statistic.
+			\item Compare to $t$-distribution with $n-k-1$ degrees of freedom.
+			\item One or two-tailed depending on $H_1$.
+			\item Note that the $p$-value given in the computer output is for testing $H_0 : \beta_j = 0$ vs $H_1 : \beta_j \neq 0$, for $j = 0,\ldots,k$.
+			\item The conclusion of each individual test is conditional on the fact that the other independent variables have already been included in the model.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Using Probability Tables}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Binomial tables:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Can only use the binomial tables if the required values of $n$ and $p$ are listed in the table.
+			\item For values of $n$ and $p$ which are not in the table, you must use the binomial formula.
+		\end{itemize}
+		
+		\item Normal tables:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item When looking up a $Z$-value to find the corresponding probability, round the $Z$-value to 2 decimal places.
+			\item When looking up a probability to find the corresponding $Z$-value, choose the closest probability.
+			\item When probability falls exactly in the middle between two $Z$-values, choose mid-point (e.g., $z_{0.05} = 1.645$).
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Using Probability Tables}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item $t$-table:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item To find a lower critical value, put a negative on the corresponding upper critical value.
+		\end{itemize}
+		
+		\item $F$-tables:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Remember to use the correct $F$-table corresponding to the value of $\alpha$.
+		\end{itemize}
+		
+		\item $t$-table and $F$-tables:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item If you can't find the exact degree of freedom in the table, chose the closest degree of freedom.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\end{document}

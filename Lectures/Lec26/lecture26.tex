@@ -1,0 +1,390 @@
+\documentclass[14pt]{beamer}
+\usetheme{Boadilla}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage[normalem]{ulem} 
+\newcommand{\E}{\mathbb{E}}
+\usefonttheme{professionalfonts}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\renewcommand{\arraystretch}{1.25}
+\usetikzlibrary{trees}
+\title[ECON2843]{Lecture 26}
+\subtitle{Part 5 Linear Regression}
+\date{}
+\usepackage{amsmath,amssymb,mathtools,wasysym}
+\begin{document}
+	\begin{frame}
+		\titlepage
+		
+	\end{frame}
+	\begin{frame}
+		\vspace{1cm}
+		\centering
+		{\color{blue}\large Multiple Linear Regression}
+	\end{frame}
+	\begin{frame}
+		\frametitle{4. Calculating $R^2$}
+		
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Since we now have more than one independent variable, we cannot define the coefficient of determination, $R^2$, to be the square of the correlation coefficient.
+			
+			\item Instead, we use the other definition of $R^2$ given in the previous topic:
+			
+			\[
+			R^2 = \frac{SSR}{SS(Total)}
+			\]
+			
+			\item It still represents the proportion of total variation in $Y$ that is explained by the model.
+		\end{itemize}
+		
+	\end{frame}
+\begin{frame}
+	\frametitle{4. Calculating $R^2$}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item We can also express $R^2$ as:
+		
+		\[
+		R^2 = \frac{SSR}{SS(Total)}
+		\]
+		\[
+		= \frac{SS(Total) - SSE}{SS(Total)}
+		\]
+		\[
+		= 1 - \frac{SSE}{SS(Total)}
+		\]
+		
+		\item Problem with $R^2$ in multiple linear regression: It will always increase as we add more independent variables to the model, even if they are not related to $Y$!
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{4. Calculating $R^2$}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item To deal with this, we often use the \textbf{adjusted} $R^2$, defined as:
+		
+		\[
+		\text{adjusted }R^2 = 1 - \frac{\frac{SSE}{n-k-1}}{\frac{SS(Total)}{n-1}}
+		\]
+		
+		\item If we use adjusted $R^2$, it tends to be smaller than $R^2$ when we have added independent variables which are not related to $Y$.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}[fragile]
+	\frametitle{Example}
+		{\footnotesize
+	\begin{verbatim}
+		Call:
+		lm(formula = attitude ~ duration + weather, data = city.dat)
+		
+		Coefficients:
+		             Estimate Std. Error t value Pr(>|t|)
+		(Intercept)  0.45755    0.94094   0.486  0.639817
+		duration     0.46751    0.08907   5.249  0.000775
+		weather      0.26344    0.11784   2.236  0.055810
+		
+		Residual standard error: 1.243 on 8 degrees of freedom
+		Multiple R-squared:  0.8724,    Adjusted R-squared: 0.8405
+		F-statistic: 27.35 on 2 and 8 DF,  p-value: 0.0002649
+	\end{verbatim}
+}
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item From the regression output, $R^2 = 0.8724$ and adjusted $R^2 = 0.8405$.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}[fragile]
+	\frametitle{Example}
+	
+	{\small
+		\begin{verbatim}
+		Analysis of Variance Table
+		Response: attitude
+		             Df  Sum Sq  Mean Sq  F value   Pr(>F)
+		Regression   2 84.4586 42.2293  27.3538  0.0002649
+		Residuals    8 12.3505  1.5438
+		Total       10 96.8091
+	\end{verbatim}
+}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item From the ANOVA table:
+		
+		\[
+		\text{adjusted }R^2 = 1 - \frac{\frac{SSE}{n-k-1}}{\frac{SS(Total)}{n-1}} = 1 - \frac{\frac{12.3505}{8}}{\frac{96.8091}{10}} = 0.8405
+		\]
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Using the Model}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Using the estimated model, we can obtain a point estimate to predict the value of $Y$ for a new observation from our population in the natural way:
+		
+		\[
+		\hat{y}_g = \hat{\beta}_0 + \hat{\beta}_1x_{1g} + \cdots + \hat{\beta}_kx_{kg}
+		\]
+		
+		\item We will rely on software to calculate confidence intervals for a particular value of $Y$ and for the expected value of $Y$.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Multicollinearity}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Because it causes the parameter estimates of the correlated independent variables to become unstable and have large standard errors (i.e., large $s_{\hat{\beta}_j}$).
+		
+		\item To illustrate, let's consider a model with two independent variables:
+		
+		\[
+		Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \epsilon
+		\]
+		
+		\item Now let's also suppose that $X_1$ and $X_2$ are perfectly correlated with each other.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Multicollinearity}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item In fact, let's assume that $X_1 = X_2$ (a very extreme situation).
+		
+		\item Consider the following two estimated models:
+	\end{itemize}
+	
+	\begin{center}
+		Model 1: $\hat{Y} = 2 + 100X_1 + 2X_2$
+		
+		Model 2: $\hat{Y} = 2 + 2X_1 + 100X_2$
+	\end{center}
+	
+	What do you notice about the two models?
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Multicollinearity}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item They are actually the same and are both equal to:
+		
+		\[
+		\hat{Y} = 2 + 102X_1
+		\]
+		
+		\item So two very different pairs of parameter estimates can result in the exact same model.
+		
+		\item This leads to huge variability in both $\hat{\beta}_1$ and $\hat{\beta}_2$, meaning $s_{\hat{\beta}_1}$ and $s_{\hat{\beta}_2}$ will both become very large.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Multicollinearity}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item This will affect the $T$-statistics for the tests of these individual coefficients:
+		
+		\[
+		T_j = \frac{\hat{\beta}_j}{s_{\hat{\beta}_j}}
+		\]
+		
+		\item We can end up making the wrong conclusion.
+		
+		\item That is, based on tests using the $T$-statistics, we might decide that there is no linear relationship between $Y$ and a particular $X_j$, when in fact there is.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Multicollinearity}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Fortunately, multicollinearity does not affect the $F$-statistic for testing the overall significance of the model.
+		
+		\item Multicollinearity is difficult to deal with - one way is to try to only use independent variables that are uncorrelated with each other.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Multiple Linear Regression with\\Categorical Independent Variables}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Categorical independent variables can be incorporated into a multiple linear regression model by coding them as \textit{indicator} or \textit{dummy} variables.
+		
+		\item Recall that an indicator variable only takes two values (usually 0 and 1), where a 1 indicates the existence of a condition and 0 indicates the absence of the condition.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Example}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item We have collected house prices for a sample of 50 houses and want to examine whether a linear relationship exists between price ($Y$) and two independent variables, house size in square metres ($X$), and whether or not the house has a pool.
+		
+		\item Both price and size are clearly continuous variables.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Example}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item To include the categorical variable reflecting whether or not the house has a pool, we define the indicator variable $W$ as follows:
+		
+		\[
+		W = \begin{cases}
+			1 & \text{if the house has a pool} \\
+			0 & \text{if the house does not have a pool}
+		\end{cases}
+		\]
+		
+		\item Now, let's say that you had initially decided to fit the following model:
+		
+		\[
+		Y = \beta_0 + \beta_1X + \beta_2W + \epsilon
+		\]
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Example}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item For houses with a pool, $W = 1$ and the model takes the form:
+		
+		\begin{align*}
+			Y &= \beta_0 + \beta_1X + \beta_2 \times 1 + \epsilon \\
+			&= (\beta_0 + \beta_2) + \beta_1X + \epsilon
+		\end{align*}
+		
+		\item For houses without a pool, $W = 0$ and the model takes the form:
+		
+		\begin{align*}
+			Y &= \beta_0 + \beta_1X + \beta_2 \times 0 + \epsilon \\
+			&= \beta_0 + \beta_1X + \epsilon
+		\end{align*}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Example}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item That is, the model we initially specified:
+		
+		\[
+		Y = \beta_0 + \beta_1X + \beta_2W + \epsilon
+		\]
+		
+		allows the intercept to vary depending on whether or not the house has a pool.
+		
+		\item But the slope, which reflects the relationship between price and house size, remains the same.
+		
+		\item But what if the relationship between price ($Y$) and size ($X$) depends on whether the house has a pool?
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Example}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item To test whether the presence of a pool requires a different intercept and/or a different slope for size, we need to fit the following model:
+		
+		\[
+		Y = \beta_0 + \beta_1X + \beta_2W + \beta_3(X \times W) + \epsilon
+		\]
+		
+		\item The above model explicitly includes the \textit{interaction} between size and whether or not the house has a pool.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Example}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item For houses with a pool, $W = 1$ and the model takes the form:
+		
+		\begin{align*}
+			Y &= \beta_0 + \beta_1X + \beta_2 \times 1 + \beta_3(X \times 1) + \epsilon \\
+			&= (\beta_0 + \beta_2) + (\beta_1 + \beta_3)X + \epsilon
+		\end{align*}
+		
+		\item For houses without a pool, $W = 0$ and the model takes the form:
+		
+		\begin{align*}
+			Y &= \beta_0 + \beta_1X + \beta_2 \times 0 + \beta_3(X \times 0) + \epsilon \\
+			&= \beta_0 + \beta_1X + \epsilon
+		\end{align*}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Example}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item This model allows both the intercept and the slope of size to change depending on whether the house has a pool.
+		
+		\item Testing whether $\beta_2 = 0$ tests whether different intercepts are required, and testing whether $\beta_3 = 0$ tests whether different slopes are required.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{More than Two Categories}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item A categorical variable with $k$ categories can be coded with $k-1$ indicator variables (one for each of the first $k-1$ categories).
+		
+		\item Suppose $k = 3$ (e.g., no garage, single garage, double garage).
+	\end{itemize}
+	
+	\begin{center}
+		\begin{tabular}{cccc}
+			\toprule
+			& \multicolumn{3}{c}{Garage} \\
+			\cline{2-4}
+			& None & Single & Double \\
+			\midrule
+			$W_1$ & 1 & 0 & 0 \\
+			$W_2$ & 0 & 1 & 0 \\
+			$W_3$ & 0 & 0 & 1 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{More than Two Categories}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item But we don't need all three indicator variables.
+	\end{itemize}
+	
+	\begin{center}
+		\begin{tabular}{cccc}
+			\toprule
+			& \multicolumn{3}{c}{Garage} \\
+			\cline{2-4}
+			& None & Single & Double \\
+			\midrule
+			$W_1$ & 1 & 0 & 0 \\
+			$W_2$ & 0 & 1 & 0 \\
+			\textcolor{red}{\sout{$W_3$}} & \textcolor{red}{\sout{0}} & \textcolor{red}{\sout{0}}&\textcolor{red}{\sout{1}} \\
+			\bottomrule
+		\end{tabular}
+
+	\end{center}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item $W_1$ and $W_2$ uniquely identify all three categories.
+		
+		\item In fact, $W_3 = 1 - (W_1 + W_2)$.
+	\end{itemize}
+	
+\end{frame}
+\end{document}

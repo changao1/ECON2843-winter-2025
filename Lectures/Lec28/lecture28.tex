@@ -1,0 +1,188 @@
+\documentclass[12pt]{beamer}
+\usetheme{Boadilla}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage[normalem]{ulem} 
+\newcommand{\E}{\mathbb{E}}
+\usefonttheme{professionalfonts}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\renewcommand{\arraystretch}{1.25}
+\usetikzlibrary{trees}
+\title[ECON2843]{Lecture 28}
+\subtitle{Part 6 Introduction to Bayesian Statistics}
+\date{}
+\usepackage{amsmath,amssymb,mathtools,wasysym}
+\begin{document}
+	\begin{frame}
+		\titlepage
+		
+	\end{frame}
+	\begin{frame}
+		\vspace{1cm}
+		\centering
+		{\color{blue}\large Bayesian Statistics}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Estimation}
+		
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Question: How should I estimate $\theta$?
+			\item Answer to the question is another question: What is your loss function?
+			\item First, what is the decision space?
+			\item $\mathcal{D} = (0,1)$, same as the parameter space.
+			\item $d \in \mathcal{D}$ is a guess about the value of $\theta$.
+			\item The loss function is up to you, but surely the more you are wrong, the more you lose.
+			\item How about squared error loss?
+			\item $L(d,\theta) = k(d-\theta)^2$
+			\item We can omit the proportionality constant $k$.
+		\end{itemize}
+		
+	\end{frame}
+	\begin{frame}
+		\frametitle{Minimize Expected Loss}
+		\framesubtitle{$L(d,\theta) = (d-\theta)^2$}
+		
+		Denote $E(\theta|X = x)$ by $\mu$. Then
+		\begin{align*}
+			E(L(d,\theta)|X = x) &= E((d-\theta)^2|X = x) \\
+			&= E((d-\color{red}\mu\color{black}+\color{red}\mu\color{black}-\theta)^2|X = x) \\
+			&= \cdots \\
+			&= E((d-\mu)^2|X = x) + E((\theta-\mu)^2|X = x) \\
+			&= (d-\mu)^2 + Var(\theta|X = x)
+		\end{align*}
+		
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Minimal when $d = \mu = E(\theta|X = x)$, the posterior mean.
+			\item This was general.
+			\item The Bayes estimate under squared error loss is the posterior mean.
+		\end{itemize}
+		
+	\end{frame}
+	\begin{frame}[fragile]
+		\frametitle{Back to the example}
+		\framesubtitle{Give the Bayes estimate of $\theta$ under squared error loss.}
+		
+		Posterior distribution of $\theta$ is Beta, with $\alpha' = \alpha + \sum_{i=1}^n x_i = 61$ 
+		and $\beta' = \beta + n - \sum_{i=1}^n x_i = 41$.
+		
+		\begin{verbatim}
+			> 61/(61+41)
+			[1] 0.5980392
+		\end{verbatim}
+		
+	\end{frame}
+	\begin{frame}
+		\frametitle{Hypothesis Testing}
+		\framesubtitle{$\theta > \frac{1}{2}$ means consumers tend to prefer the new blend of coffee.}
+		
+		Test $H_0 : \theta \leq \theta_0$ versus $H_1 : \theta > \theta_0$.
+		
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item What is the loss function?
+			\item When you are wrong, you lose.
+			\item Try zero-one loss.
+		\end{itemize}
+		
+		\begin{center}
+			\begin{tabular}{|c|c|c|}
+				\hline
+				& \multicolumn{2}{c|}{Loss $L(d_j,\theta)$} \\
+				\hline
+				Decision & When $\theta \leq \theta_0$ & When $\theta > \theta_0$ \\
+				\hline
+				$d_0: \theta \leq \theta_0$ & 0 & 1 \\
+				\hline
+				$d_1: \theta > \theta_0$ & 1 & 0 \\
+				\hline
+			\end{tabular}
+		\end{center}
+		
+	\end{frame}
+	\begin{frame}
+		\frametitle{Compare expected loss for $d_0$ and $d_1$}
+		
+		\begin{center}
+			\begin{tabular}{|c|c|c|}
+				\hline
+				& \multicolumn{2}{c|}{Loss $L(d_j,\theta)$} \\
+				\hline
+				Decision & When $\theta \leq \theta_0$ & When $\theta > \theta_0$ \\
+				\hline
+				$d_0: \theta \leq \theta_0$ & 0 & 1 \\
+				\hline
+				$d_1: \theta > \theta_0$ & 1 & 0 \\
+				\hline
+			\end{tabular}
+		\end{center}
+		
+		Note $L(d_0,\theta) = I(\theta > \theta_0)$ and $L(d_1,\theta) = I(\theta \leq \theta_0)$.
+		
+		\begin{align*}
+			E(I(\theta > \theta_0)|X = x) &= P(\theta > \theta_0|X = x) \\
+			E(I(\theta \leq \theta_0)|X = x) &= P(\theta \leq \theta_0|X = x)
+		\end{align*}
+		
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Choose the smaller posterior probability of being wrong.
+			\item Equivalently, reject $H_0$ if $P(H_0|X = x) < \frac{1}{2}$.
+		\end{itemize}
+		
+	\end{frame}
+	\begin{frame}[fragile]
+		\frametitle{Back to the example}
+		\framesubtitle{Decide between $H_0 : \theta \leq 1/2$ and $H_1 : \theta > 1/2$ under zero-one loss.}
+		
+		Posterior distribution of $\theta$ is Beta, with $\alpha' = \alpha + \sum_{i=1}^n x_i = 61$ 
+		and $\beta' = \beta + n - \sum_{i=1}^n x_i = 41$.
+		
+		Want $P(\theta > \frac{1}{2}|X = x)$
+		
+		\begin{verbatim}
+			> 1 - pbeta(1/2,61,41) # P(theta > theta0|X=x)
+			[1] 0.976978
+		\end{verbatim}
+		
+	\end{frame}
+	\begin{frame}
+		\frametitle{How much worse is a Type I error?}
+		
+		\begin{center}
+			\begin{tabular}{|c|c|c|}
+				\hline
+				& \multicolumn{2}{c|}{Loss $L(d_j,\theta)$} \\
+				\hline
+				Decision & When $\theta \leq \theta_0$ & When $\theta > \theta_0$ \\
+				\hline
+				$d_0: \theta \leq \theta_0$ & 0 & 1 \\
+				\hline
+				$d_1: \theta > \theta_0$ & k & 0 \\
+				\hline
+			\end{tabular}
+		\end{center}
+		
+		To conclude $H_1$, posterior probability must be at least $k$ times as big as posterior probability of $H_0$.
+		
+		$k = 19$ is attractive.
+		
+		A realistic loss function for the taste test would be more complicated.
+		
+	\end{frame}
+	\begin{frame}
+		\frametitle{Computation}
+		
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Inference will be based on the posterior.
+			\item Must be able to calculate $E(g(\theta)|X = x)$
+			\item For example, $E(L(d,\theta)|X = x)$
+			\item Or at least
+			\[ \int L(d,\theta)f(x|\theta)\pi(\theta)\,d\theta. \]
+			\item If $\theta$ is of low dimension, numerical integration usually works.
+			\item For high dimension, it can be tough.
+		\end{itemize}
+		
+	\end{frame}
+\end{document}

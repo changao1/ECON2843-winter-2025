@@ -1,0 +1,445 @@
+\documentclass[14pt]{beamer}
+\usetheme{Boadilla}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{tikz}
+
+\newcommand{\E}{\mathbb{E}}
+\usefonttheme{professionalfonts}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\renewcommand{\arraystretch}{1.25}
+\usetikzlibrary{trees}
+\title[ECON2843]{Lecture 25}
+\subtitle{Part 5 Linear Regression}
+\date{}
+\usepackage{amsmath,amssymb,mathtools,wasysym}
+\begin{document}
+	\begin{frame}
+		\titlepage
+		
+	\end{frame}
+	\begin{frame}
+		\vspace{1cm}
+		\centering
+		{\color{blue}\large Multiple Linear Regression}
+	\end{frame}
+	\begin{frame}[fragile]
+		\frametitle{R Output}
+		{\footnotesize
+			\begin{verbatim}
+				Call:
+				lm(formula = attitude ~ duration + weather, data = city.dat)
+				
+				Residuals:
+				Min       1Q   Median       3Q      Max 
+				-1.56859 -0.79732  0.03449  0.47779  1.82480 
+			\end{verbatim}
+			{\color{red}
+				\begin{verbatim}
+					Coefficients:
+					Estimate                Std. Error t stat. Pr(>|t|)
+					(Intercept)  0.45755    0.94094   0.486  0.639817
+					duration     0.46751    0.08907   5.249  0.000775
+					weather      0.26344    0.11784   2.236  0.055810
+					
+					Residual standard error: 1.243 on 8 degrees of freedom
+					Multiple R-squared: 0.8724,  Adjusted R-squared: 0.8405
+					F-statistic: 27.35 on 2 and 8 DF,  p-value: 0.0002649
+				\end{verbatim}
+		}}
+		
+	\end{frame}
+\begin{frame}
+	\frametitle{Assessing the Model}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item We can use the same approaches used for simple linear regression to assess our multiple linear regression model:
+	\end{itemize}
+	
+	\begin{enumerate}
+		\item[\textcolor{blue}{1.}] Check to see if the model assumptions hold.
+		\item[\textcolor{blue}{2.}] Test the overall significance of the model.
+		\item[\textcolor{blue}{3.}] Estimate $\sigma_\epsilon^2$, the variance of the error variable.
+		\item[\textcolor{blue}{4.}] Calculate $R^2$, the proportion of variation in $Y$ explained by the model.
+	\end{enumerate}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{\textcolor{blue}{1.} Checking the Model Assumptions}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Similar to simple linear regression, we check to see if the residuals $e_i$ satisfy the model assumptions:
+	
+	
+	\begin{enumerate}[label=\textcolor{blue}{(\alph*).}]
+		\item Are they normally distributed?
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Check histograms (normal shape) and normal probability plots (linear).
+		\end{itemize}
+		
+		\item Do they have mean 0 and constant variance?
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Check scatter plots of residuals against \textit{fitted values} (should be random noise around 0 with no patterns).
+		\end{itemize}
+		
+		\item Are they independent?
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Check plots of residuals against collection order (should be no trends or patterns).
+		\end{itemize}
+	\end{enumerate}
+\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{\textcolor{blue}{2.} Testing Overall Significance of Model}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Recall that for simple linear regression, the following hypotheses were used to test the overall significance of the model:
+	\end{itemize}
+	
+	\[
+	H_0 : \beta_1 = 0
+	\]
+	\[
+	H_1 : \beta_1 \neq 0
+	\]
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item If $H_0$ is true, then $X$ drops out of the model, but if $H_1$ is true, then $X$ is linearly related to $Y$.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{\textcolor{blue}{2.} Testing Overall Significance of Model}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item For a multiple linear regression model, the following hypotheses must be used to test the overall significance of the model:
+	\end{itemize}
+	
+	\[
+	H_0 : \beta_1 = \beta_2 = \cdots = \beta_k = 0
+	\]
+	\[
+	H_1 : \text{Not all coefficient parameters are equal to 0.}
+	\]
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item If $H_0$ is true, then all independent variables drop out of the model, but if $H_1$ is true, at least one of them is linearly related to $Y$.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{\textcolor{blue}{2.} Testing Overall Significance of Model}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item If we fit a multiple linear regression model, but $H_0$ is true, then that model will probably not explain much of the variation in $Y$.
+		
+		\item If we fit a multiple linear regression model, and $H_1$ is true, then that model will most likely be able to explain a reasonable amount of variation in $Y$.
+		
+		\item How do we measure sources and amounts of variation?
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Sums of Squares}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Total sum of squares:
+		\[
+		SS(\text{Total}) = \sum_{i=1}^n (Y_i - \bar{Y})^2
+		\]
+		
+		\item Sum of squares for regression:
+		\[
+		SSR = \sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2
+		\]
+		
+		\item Sum of squares for error:
+		\[
+		SSE = \sum_{i=1}^n (Y_i - \hat{Y}_i)^2
+		\]
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Sums of Squares}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Formulae are exactly the same as for simple linear regression, with the only difference being in how the fitted values $\hat{Y}_i$ are calculated.
+		
+		\item And the same identity relating the sums of squares still holds:
+		\[
+		SS(\text{Total}) = SSR + SSE
+		\]
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{ANOVA Table for Regression}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item So to test the overall significance of the multiple linear regression model, we need to construct an ANOVA table for regression:
+	\end{itemize}
+	
+	\begin{table}
+		\small
+		\begin{tabular}{ccccc}
+			\toprule
+			\multirow{2}{*}{Source} & Sum of & Deg. of & Mean & \multirow{2}{*}{$F$-statistic} \\
+			& squares & freedom & squares & \\
+			\midrule
+			Regression & $SSR$ & $k$ & $MSR = \frac{SSR}{k}$ & $F = \frac{MSR}{MSE}$ \\[1ex]
+			Error& \multirow{2}{*}{$SSE$} & \multirow{2}{*}{$n-k-1$} & \multirow{2}{*}{$MSE = \frac{SSE}{n-k-1}$} & \\
+			(Residual) & & & & \\[1ex]
+			\midrule
+			Total & $SS(\text{Total})$ & $n-1$ & & \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Test Statistic}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item So we reject $H_0$ if the model explains a large amount of the variation in $Y$.
+		
+		\item That is, we reject when the $MSR$ is large, compared to the $MSE$.
+		
+		\item Just like in ANOVA, the test statistic is the $F$-statistic:
+		\[
+		F = \frac{\frac{SSR}{k}}{\frac{SSE}{n-k-1}} = \frac{MSR}{MSE}
+		\]
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Decision Rule}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item We compare the $F$-statistic to an $F$-distribution with $k$ numerator degrees of freedom and $n-k-1$ denominator degrees of freedom.
+		
+		\item At a significance level of $\alpha$, we reject $H_0$ if $F > F_{\alpha,k,n-k-1}$.
+		
+		\item Note that if we reject $H_0$, we are concluding that at least one of the coefficient parameters is not equal to 0.
+		
+		\item But we then need to do some additional tests to determine \textit{which} coefficients are not equal to 0.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Example}
+	
+
+		{\small
+		{\tt\ Analysis of Variance Table}
+		\vspace{0.2cm}
+		
+		{\tt\ Response: attitude}
+		\vspace{1mm}
+		
+		\begin{tabular}{lrrrrr}
+		& {\tt Df} & {\tt Sum Sq} & {\tt Mean Sq} & {\tt F value} & {\tt Pr(>F)} \\
+			{\tt Regression} & 2 & 84.4586 & 42.2293 & {\color{red}27.3538} & {\color{red}0.0002649} \\
+			{\tt Residuals}  & 8 & 12.3505 & 1.5438 & & \\
+			{\tt Total}      & 10 & 96.8091 & & & \\
+		\end{tabular}}
+	\vspace{0.3cm}
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item We can test the overall significance of the model from the ANOVA section of the R output.
+		
+		\item Since the $p$-value of 0.0002649 is very small, we reject $H_0$ and we conclude that at least one coefficient parameter is not equal to 0.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Testing Individual Coefficient Parameters}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item If we reject $H_0$ and conclude that at least one coefficient parameter is not equal to 0, we next want to test which are not equal to 0.
+		
+		\item For each coefficient parameter, we can test:
+		\[
+		H_0 : \beta_j = 0
+		\]
+		\[
+		H_1 : \beta_j \neq 0
+		\]
+		for $j = 1,\ldots,k$.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Testing Individual Coefficient Parameters}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item We use the following test statistic to test these hypotheses:
+		\[
+		T = \frac{\hat{\beta}_j}{s_{\hat{\beta}_j}}
+		\]
+		where $s_{\hat{\beta}_j}$ is the standard error of $\hat{\beta}_j$.
+		
+		\item For our decision rule, we compare the test statistic to a $t$-distribution with $n-k-1$ degrees of freedom and reject $H_0$ if $T > t_{\frac{\alpha}{2},n-k-1}$ or $T < -t_{\frac{\alpha}{2},n-k-1}$.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Testing Individual Coefficient Parameters}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Each test of an individual coefficient parameter is conditional on the fact that \textit{all the other independent variables have been included in the model}.
+		
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item If we reject $H_0$, we would conclude that, \textit{once all the other variables have been considered}, $X_j$ has a significant linear relationship with $Y$.
+			
+			\item If we fail to reject $H_0$, we would conclude that, \textit{once all the other variables have been considered}, $X_j$ does not have a significant linear relationship with $Y$.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Testing Individual Coefficient Parameters}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item The conditional dependence of each test of an individual coefficient parameter is very important to recognize and understand.
+		
+		\item It means that if we were to fit a simple linear regression with only $X_j$, we might not necessarily make the same conclusion.
+		
+		\item For example, we might conclude that $X_j$ is not linearly related to $Y$ in a multiple linear regression, but based on a simple linear regression with just $X_j$, we might conclude that $X_j$ is linearly related to $Y$.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Example}
+	
+	{\footnotesize
+		{\tt\ Call:}
+	\vspace{0.2cm}
+	
+	{\tt\ lm(formula = attitude \textasciitilde{} duration + weather, data = city.dat)}
+	
+	\vspace{2mm}
+	{\tt\ Coefficients:}
+	\begin{center}
+		\begin{tabular}{lrrrr}
+			& {\tt Estimate} & {\tt Std. Error} & {\tt t value} & {\tt Pr(>|t|)} \\
+			{\tt (Intercept)} & 0.45755 & 0.94094 & 0.486 & 0.639817 \\
+			{\color{red}\tt duration} & {\color{red}0.46751} & {\color{red}0.08907} & {\color{red}5.249} & {\color{red}0.000775} \\
+			{\tt weather} & 0.26344 & 0.11784 & 2.236 & 0.055810 \\
+		\end{tabular}
+	\end{center}
+	\vspace{0.2cm}}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Based on the $p$-value of 0.000775, we would reject $H_0$ and conclude that, once importance of weather is considered, duration of residence still has a significant linear relationship with attitude towards city.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{General Test for $\beta_j$}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item General hypotheses for $\beta_j$, $j=0,\ldots,k$:
+		\[
+		H_0 : \beta_j = c
+		\]
+		\[
+		H_1 : \beta_j(\neq,<,>)c
+		\]
+		
+		\item Test statistic:
+		\[
+		T = \frac{\hat{\beta}_j - c}{s_{\hat{\beta}_j}}
+		\]
+		
+		\item Decision rule:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Compare to a $t$-distribution with $n-k-1$ degrees of freedom.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{\textcolor{blue}{3.} Estimating $\sigma_\epsilon^2$}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item For multiple linear regression, the standard error of estimate $s_\epsilon$ is defined as:
+		\[
+		s_\epsilon = \sqrt{\frac{\sum_{i=1}^n e_i^2}{n-k-1}} = \sqrt{\frac{\sum_{i=1}^n (Y_i - \hat{Y}_i)^2}{n-k-1}}
+		\]
+		
+		\item The appropriate degrees of freedom is now $n-k-1$, where $k$ is the number of independent variables.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{\textcolor{blue}{3.} Estimating $\sigma_\epsilon^2$}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Note that if $k=1$ (simple linear regression), we get the usual $n-2$ in the denominator.
+		
+		\item Since $s_\epsilon^2$ is an estimate of $\sigma_\epsilon^2$, recall that a small value of $s_\epsilon$ indicates a good model.
+		
+		\item But again, if you are only using $s_\epsilon$ (or $s_\epsilon^2$) to evaluate models, it's more useful as a comparative tool.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Example}
+	
+	{\footnotesize
+		{\tt\ Call:}\\
+		\vspace{2mm}
+		
+	{\tt\ lm(formula = attitude \textasciitilde{} duration + weather, data = city.dat)}
+	
+	\vspace{2mm}
+	{\tt\ Coefficients:}
+	\begin{center}
+		\begin{tabular}{lrrrr}
+			& {\tt Estimate} & {\tt Std. Error} & {\tt t value} & {\tt Pr(>|t|)} \\
+			{\tt (Intercept)} & 0.45755 & 0.94094 & 0.486 & 0.639817 \\
+			{\tt duration} & 0.46751 & 0.08907 & 5.249 & 0.000775 \\
+			{\tt weather} & 0.26344 & 0.11784 & 2.236 & 0.055810 \\
+		\end{tabular}
+	\end{center}
+	
+	{\color{red}\tt\ Residual standard error: 1.243 on 8 degrees of freedom}\\
+	{\tt\ Multiple R-squared: 0.8724, Adjusted R-squared: 0.8405}\\
+	{\tt\ F-statistic: 27.35 on 2 and 8 DF, p-value: 0.0002649}}
+		\vspace{2mm}
+		
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item From the regression output, $s_\epsilon = 1.243$.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Example}
+	
+	{\small
+		{\tt\ Analysis of Variance Table}
+	\vspace{2mm}
+	
+	{\tt\ Response: attitude}
+	\begin{center}
+		\begin{tabular}{lrrrrr}
+			& {\tt Df} & {\tt Sum Sq} & {\tt Mean Sq} & {\tt F value} & {\tt Pr(>F)} \\
+			{\tt Regression} & 2 & 84.4586 & 42.2293 & 27.3538 & 0.0002649 \\
+			{\tt Residuals} & {\color{red}8} & {\color{red}12.3505} & 1.5438 & & \\
+			{\tt Total} & 10 & 96.8091 & & & \\
+		\end{tabular}
+	\end{center}}
+	\vspace{2mm}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item From the ANOVA table:
+		\[
+		s_\epsilon = \sqrt{\frac{SSE}{n-k-1}} = \sqrt{\frac{12.3505}{8}} = 1.243
+		\]
+	\end{itemize}
+	
+\end{frame}
+\end{document}

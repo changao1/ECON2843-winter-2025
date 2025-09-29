@@ -1,0 +1,259 @@
+\documentclass[12pt]{beamer}
+\usetheme{Boadilla}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{tikz}
+
+\newcommand{\E}{\mathbb{E}}
+\usefonttheme{professionalfonts}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\renewcommand{\arraystretch}{1.25}
+\usetikzlibrary{trees}
+\title[ECON2843]{Lecture 16}
+\subtitle{Part 3 Estimation and Hypothesis Test}
+\date{}
+\usepackage{amsmath,amssymb,mathtools,wasysym}
+\begin{document}
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	\begin{frame}
+		\vspace{1cm}
+		\centering
+		{\color{blue}\large Comparing Two Populations}
+	\end{frame}
+	
+\begin{frame}
+	\frametitle{Comparing Two Populations}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Thus far, our statistical inference has focused on a single population parameter from a single population.
+		\item We will now look at comparing population parameters from two populations.
+		\item Specifically, we will make inferences about:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item The difference between two population means, $\mu_1 - \mu_2$.
+			\item The difference between two population proportions, $p_1 - p_2$.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Independent Samples}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Suppose we ask the question: ``Are men taller than women?''
+		
+		\item We need two benchmarks - population mean height for men and population mean height for women.
+		
+		\item Select a random sample of men and a random sample of women.
+		
+		\item Compare the sample mean height of men to the sample mean height of women.
+		
+		\item These are \textbf{independent samples} - the samples are collected independently of each other.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Paired Samples}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Let's ask another question: ``Are brothers taller than their sisters?''
+		
+		\item We can no longer select a random sample of men and a random sample of women.
+		
+		\item We need to sample brother and sister \textit{pairs}.
+		
+		\item For each pair, we could calculate the difference in heights between the brother and sister, then analyze these differences.
+		
+		\item These are \textbf{paired samples} - each observation in one sample is matched or paired to an observation in the other sample.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Independent or Paired Samples}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Whether you should collect independent samples or paired samples will be determined by your question.
+		
+		\item It is important to establish this at the beginning of your study or experiment, as the way you perform your inference (e.g., confidence intervals, hypothesis tests) will change depending on how the samples are collected.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Flow Chart}
+	We'll go back to this later!
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Do we have \textit{independent} samples or \textit{paired} samples?
+		\begin{enumerate}[label=\textcolor{blue}{\arabic*.}]
+			\item Independent samples.
+			\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+				\item Are the population variances, $\sigma_1^2$ and $\sigma_2^2$, known?
+				\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+					\item Known: Test using $Z$-statistic.
+					\item Unknown: Are the population variances equal, i.e., does $\sigma_1^2 = \sigma_2^2$?
+					\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+						\item Equal: Test using $T$-statistic.
+						\item Unequal: Can't do test by hand.
+					\end{itemize}
+				\end{itemize}
+			\end{itemize}
+			\item Paired samples.
+			\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+				\item Test using $T$-statistic.
+			\end{itemize}
+		\end{enumerate}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Population Variances are Known}
+	\framesubtitle{Testing $\mu_1 - \mu_2$}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Suppose we want to test hypotheses regarding the difference between two population means using independent samples drawn from each population.
+		
+		\item Hypotheses:
+		
+		\begin{align*}
+			H_0 &: \mu_1 - \mu_2 = D_0 \\
+			H_1 &: \mu_1 - \mu_2 (\neq, <, >) D_0
+		\end{align*}
+		
+		\item What is a reasonable estimator of $\mu_1 - \mu_2$?
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Population Variances are Known}
+	\framesubtitle{Testing $\mu_1 - \mu_2$}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item We can use $\bar{X}_1 - \bar{X}_2$ as an estimator of $\mu_1 - \mu_2$.
+		\item What is the sampling distribution of $\bar{X}_1 - \bar{X}_2$?
+		\item For independent samples and large enough sample sizes, the sampling distribution of $\bar{X}_1 - \bar{X}_2$ is approximately normal with mean and variance given by:
+	\end{itemize}
+
+	\begin{align*}
+		E(\bar{X}_1 - \bar{X}_2) &= \mu_1 - \mu_2 \\[0.5cm]
+		V(\bar{X}_1 - \bar{X}_2) &= \frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}
+	\end{align*}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Population Variances are Known}
+	\framesubtitle{Testing $\mu_1 - \mu_2$}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Test statistic:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item We can calculate a standardized $Z$-statistic to use as our test statistic!
+		\end{itemize}
+	\end{itemize}
+	
+	\begin{align*}
+		Z &= \frac{(\bar{X}_1 - \bar{X}_2) - (\mu_1 - \mu_2)}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \\[1cm]
+		&= \frac{(\bar{X}_1 - \bar{X}_2) - D_0}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}}
+	\end{align*}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Population Variances are Known}
+	\framesubtitle{Testing $\mu_1 - \mu_2$}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Decision rule:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item We compare the $Z$-statistic to a standard normal distribution and either determine rejection region(s) or calculate a $p$-value to decide whether or not to reject the null hypothesis.
+			\item For example, at significance level $\alpha$ reject $H_0$ if:
+			\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+				\item $Z > z_{\frac{\alpha}{2}}$ or $Z < -z_{\frac{\alpha}{2}}$ (two-tailed $\neq$).
+				\item $Z > z_{\alpha}$ (upper-tailed $>$).
+				\item $Z < -z_{\alpha}$ (lower-tailed $<$).
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Population Variances are Known}
+	\framesubtitle{Confidence Interval for $\mu_1 - \mu_2$}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Recall the equivalence between a two-tailed hypothesis test and a confidence interval.
+		\item A $100(1 - \alpha)\%$ confidence interval for $\mu_1 - \mu_2$ when the population variances are known is given by:
+	\end{itemize}
+	
+	
+	\[
+	(\bar{X}_1 - \bar{X}_2) \pm z_{\frac{\alpha}{2}} \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}
+	\]
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Population Variances are Unknown}
+	\framesubtitle{Testing $\mu_1 - \mu_2$}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Generally, the population variances, $\sigma_1^2$ and $\sigma_2^2$, are rarely known.
+		\item If they are unknown, how we proceed in our test depends on whether we can assume the unknown population variances are equal.
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item If variances are equal, test can be performed by hand.
+			\item If variances are not equal, test is complicated and cannot be done by hand.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Population Variances are Unknown}
+	\framesubtitle{Testing Equality of Variances}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item But how do we test for equality of variances?
+		\item By testing the following hypotheses:
+	\end{itemize}
+	
+
+	\begin{align*}
+		H_0 : \sigma_1^2 = \sigma_2^2 \quad &\left(\text{or } \frac{\sigma_1^2}{\sigma_2^2} = 1\right) \\[0.5cm]
+		H_1 : \sigma_1^2 \neq \sigma_2^2 \quad &\left(\text{or } \frac{\sigma_1^2}{\sigma_2^2} \neq 1\right)
+	\end{align*}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Population Variances are Unknown}
+	\framesubtitle{Testing Equality of Variances}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Test statistic:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item We use the following test statistic, called the $F$-statistic, to test the equality of variances:
+			
+			\[
+			F = \frac{s_1^2}{s_2^2}
+			\]
+			
+			\item We would then reject $H_0$ if the $F$-statistic is too large ($\gg 1$) or too small ($\ll 1$).
+			\item But what is the sampling distribution of this $F$-statistic under $H_0$?
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}
+	\frametitle{$F$-distribution}
+	
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item The null distribution of this $F$-statistic is an $F$-distribution with $n_1 - 1$ numerator degrees of freedom and $n_2 - 1$ denominator degrees of freedom.
+		\item The $F$-distribution is a special continuous distribution:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item It has two parameters called the numerator degrees of freedom and the denominator degrees of freedom.
+			\item $F$-tables give critical values that cut off probability $A$ in the upper tail.
+			\item There is a different table for each value of $A$.
+			\item Rows and columns display the degrees of freedom.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+\end{document}

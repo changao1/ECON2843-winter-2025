@@ -1,0 +1,332 @@
+\documentclass[12pt]{beamer}
+\usetheme{Boadilla}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{tikz}
+\newcommand{\E}{\mathbb{E}}
+\usefonttheme{professionalfonts}
+\usepackage{pgfplots}
+\renewcommand{\arraystretch}{1.25}
+\usetikzlibrary{trees}
+\title[ECON2843]{Lecture 6}
+\subtitle{Part 2 Probability and Distributions}
+\date{}
+\usepackage{amsmath,amssymb,mathtools,wasysym}
+\begin{document}
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	\begin{frame}{Example 4}
+		\begin{itemize}
+			\item[\color{blue}$\blacktriangleright$] There are three buckets that weigh 1lb, 2lb and3lb, respectively. A bucket weighing $i$ lb contains $i$ white balls and $5 - i$ black balls, for $i = 1,2,3$. For example, the bucket weighing 1lb contains 1 white ball and 4 black balls. Suppose a bucket is chosen with probability proportional to its weight and two balls are randomly selected (without replacement) from this bucket.
+		\end{itemize}
+		\begin{enumerate}[label=\textcolor{blue}{(\alph*)}]
+			\item Find the probability that both balls selected are white.
+			\item If both balls selected are white, what is the probability that the bucket weighing 3lb was chosen?
+		\end{enumerate}
+		
+\end{frame}
+\begin{frame}{Solution - Part (a)}
+\begin{itemize}
+	\item[\color{blue}$\blacktriangleright$] Let $A$ be the event ``both balls selected are white''.
+	\item[\color{blue}$\blacktriangleright$] Let $B_i$ be the event that the bucket weighing $i$lb is selected.
+	\item[\color{blue}$\blacktriangleright$] Note that $B_1$, $B_2$ and $B_3$ are a partition of $S$.
+	\item[\color{blue}$\blacktriangleright$] Therefore, by the Law of Total Probability:
+\end{itemize}
+
+\begin{align*}
+	P(A) &= P(A \cap B_1) + P(A \cap B_2) + P(A \cap B_3) \\
+	&= P(A|B_1) \times P(B_1) + P(A|B_2) \times P(B_2) \\
+	&\quad + P(A|B_3) \times P(B_3)
+\end{align*}
+\end{frame}
+\begin{frame}{Solution - Part (a)}
+\begin{itemize}
+	\item[\color{blue}$\blacktriangleright$] The total weight of the buckets is $1 + 2 + 3 = 6$lb.
+	\item[\color{blue}$\blacktriangleright$] Therefore, $P(B_1) = \frac{1}{6}$, $P(B_2) = \frac{1}{3}$ and $P(B_3) = \frac{1}{2}$.
+	\item[\color{blue}$\blacktriangleright$] What about $P(A|B_1)$, $P(A|B_2)$ and $P(A|B_3)$?
+\end{itemize}
+
+\begin{align*}
+	P(A|B_1) &= 0 \\[6pt]
+	P(A|B_2) &= \frac{2}{5} \times \frac{1}{4} = \frac{1}{10} \\[6pt]
+	P(A|B_3) &= \frac{3}{5} \times \frac{2}{4} = \frac{3}{10}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Solution - Part (a)}
+\begin{itemize}
+	\item[\color{blue}$\blacktriangleright$] Putting this all together, we get:
+\end{itemize}
+
+\begin{align*}
+	P(A) &= P(A|B_1) \times P(B_1) + P(A|B_2) \times P(B_2) \\
+	&\quad + P(A|B_3) \times P(B_3) \\[10pt]
+	&= 0 \times \frac{1}{6} + \frac{1}{10} \times \frac{1}{3} + \frac{3}{10} \times \frac{1}{2} \\[10pt]
+	&= \frac{11}{60} \\[10pt]
+	&= 0.1833
+\end{align*}
+\end{frame}
+
+\begin{frame}{Solution - Part (b)}
+	
+\begin{itemize}
+	\item[\color{blue}$\blacktriangleright$] We want to find $P(B_3|A)$:
+\end{itemize}
+
+\begin{align*}
+	P(B_3|A) &= \frac{P(B_3 \cap A)}{P(A)} \\[10pt]
+	&= \frac{P(A|B_3) \times P(B_3)}{P(A)} \\[10pt]
+	&= \frac{\frac{3}{10} \times \frac{1}{2}}{\frac{11}{60}} \\[10pt]
+	&= \frac{9}{11} \\[10pt]
+	&= 0.8182
+\end{align*}
+
+\end{frame}
+\begin{frame}{}
+	
+Let's talk about {\bf distribution}!
+	
+\end{frame}
+
+\begin{frame}{Random Variable}
+	
+\begin{itemize}
+	\item[\color{blue}$\blacktriangleright$] Suppose we flip a fair coin three times.
+	\item[\color{blue}$\blacktriangleright$] The sample space is:
+\end{itemize}
+
+\[
+S = \{HHH, HHT, HTH, HTT,
+\]
+\[
+\quad\quad THH, THT, TTH, TTT\}
+\]
+
+\begin{itemize}
+	\item[\color{blue}$\blacktriangleright$] Each outcome is equally likely to occur.
+	\item[\color{blue}$\blacktriangleright$] Define a new quantity (call it $X$) which is equal to the number of heads that occur in the three coin flips.
+\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{Random Variable}
+\begin{itemize}
+\item[\color{blue}$\blacktriangleright$] $X$ can take the value 0, 1, 2 or 3.
+\item[\color{blue}$\blacktriangleright$] The actual value that $X$ takes is random and depends on the outcome of the experiment.
+\item[\color{blue}$\blacktriangleright$] $X$ is what we call a random variable.
+\item[\color{blue}$\blacktriangleright$] Formally, a {\bf random variable} is a function that assigns a numeric value to each simple event in a sample space.
+\end{itemize}
+
+	
+\end{frame}
+
+\begin{frame}{Notation}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] Denote random variables using uppercase letters, e.g., $X$, $Y$, $Z$.
+		
+		\item[\color{blue}$\blacktriangleright$] Denote the actual observed or \textit{realised} value of the random variable by lowercase letters, e.g., $x$, $y$, $z$.
+		
+		\item[\color{blue}$\blacktriangleright$] Back to coin flipping example:
+		\begin{itemize}
+			\item[\color{blue}$\blacktriangleright$] $X$ is the random variable that can take values 0, 1, 2 or 3.
+			\item[\color{blue}$\blacktriangleright$] If we actually perform the experiment and observe the outcome $HHT$, then the realized value of $X$ is $x = 2$.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{Discrete Random Variable}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] A \textbf{discrete random variable} is one that can take on a countable number of possible values.
+		
+		\item[\color{blue}$\blacktriangleright$] For example:
+		\begin{itemize}
+			\item[\color{blue}$\blacktriangleright$] Flip a coin five times and let $X$ be the number of heads that occurs. The possible values are 
+			$X = 0, 1, 2, 3, 4$ or $5$.
+			
+			\item[\color{blue}$\blacktriangleright$] Flip a coin until it comes up tails and let $X$ be the total number of flips needed. The possible values are
+			$X = 1, 2, 3, 4, 5, 6, 7, \ldots$
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{Continuous Random Variable}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] A \textbf{continuous random variable} is one that can take on an uncountable number of possible values - the number of possible values is infinite as a result of continuous variation.
+		
+		\item[\color{blue}$\blacktriangleright$] For example:
+		\begin{itemize}
+			\item[\color{blue}$\blacktriangleright$] Let $X$ be the time taken to finish a three hour exam.
+			\item[\color{blue}$\blacktriangleright$] Let $X$ be the weight of a boxer.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{Discrete Probability Distribution}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] For a discrete random variable $X$, how can we determine $P(X = x)$ for any given value of $x$?
+		
+		\item[\color{blue}$\blacktriangleright$] The probability that a discrete random variable $X$ takes the value $x$ is denoted by $p(x)$ and is equal to the sum of all the probabilities of the simple events for which $X = x$.
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{Discrete Probability Distribution}
+\begin{itemize}
+	\item[\color{blue}$\blacktriangleright$] A discrete probability distribution is a table or formula listing all possible values that a discrete random variable can take, together with the corresponding probability for each value.
+	
+	\item[\color{blue}$\blacktriangleright$] A discrete probability distribution must satisfy two requirements:
+	\begin{align*}
+		1. & \quad 0 \leq p(x) \leq 1 \text{ for all } x. \\
+		2. & \quad \sum_{\text{all } x} p(x) = 1
+	\end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example}
+\begin{itemize}
+	\item[\color{blue}$\blacktriangleright$] Flip a coin three times, let $X$ be the number of heads.
+\end{itemize}
+
+\begin{align*}
+	p(0) &= P(X = 0) = P(\{TTT\}) = \frac{1}{8} \\[1em]
+	p(1) &= P(X = 1) = P(\{HTT, THT, TTH\}) = \frac{3}{8} \\[1em]
+	p(2) &= P(X = 2) = P(\{HHT, HTH, THH\}) = \frac{3}{8} \\[1em]
+	p(3) &= P(X = 3) = P(\{HHH\}) = \frac{1}{8}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Example}
+	\begin{center}
+	\begin{tabular}{ccccc}
+		\toprule
+		$x$&0&1&2&3\\
+		\toprule
+		$p(x)$&$\frac{1}{8}$&$\frac{3}{8}$&$\frac{3}{8}$&$\frac{1}{8}$\\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+
+\begin{itemize}
+	\item[\color{blue}$\blacktriangleright$] What is the probability of at most one head?
+	$$P(X \leq 1) = p(0) + p(1) = \frac{1}{8} + \frac{3}{8} = \frac{1}{2}$$
+\item[\color{blue}$\blacktriangleright$] What is the probability of at least one head?
+\end{itemize}
+	\begin{align*}
+	P(X \geq 1) &= p(1) + p(2) + p(3) = \frac{3}{8} + \frac{3}{8} + \frac{1}{8} = \frac{7}{8}\\
+	&= 1 - p(0) = 1 - \frac{1}{8} = \frac{7}{8}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Probability Distributions and Populations}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] Probability distributions represent populations.
+		\item[\color{blue}$\blacktriangleright$] Rather than recording every observation in the population, a probability distribution summaries the population by listing only the possible values that appear in the population, together with their corresponding probabilities.
+		\item[\color{blue}$\blacktriangleright$] We can calculate population parameters such as the population mean and population variance from a probability distribution.
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{Expected Value}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] Let $X$ be a discrete random variable with probability distribution $p(x)$. The \textbf{expected value} (or \textbf{population mean}) of $X$ is defined to be:
+		
+		\[ \mu = \mathbb E(X) = \sum_{\text{all }x} (x \times p(x)) \]
+		
+		\item[\color{blue}$\blacktriangleright$] Compare this to the formula for the population mean given in topic 1:
+		
+		\[ \mu = \frac{1}{N} \sum_{i=1}^N X_i = \sum_{i=1}^N \left(x_i \times \frac{1}{N}\right) \]
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{Expected Value}
+	
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] It is straightforward to calculate the expected value of any function of a discrete random variable $X$.
+		
+		\item[\color{blue}$\blacktriangleright$] Let $g(X)$ be some function of $X$. Then the expected value of $g(X)$ is defined to be:
+		
+		$$\mathbb E(g(X))=\sum_{\text{all }x}(g(x)\times p(x))$$
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{Example}
+	\begin{center}
+		\begin{tabular}{ccccc}
+			\toprule
+			$x$&0&1&2&3\\
+			\toprule
+			$p(x)$&$\frac{1}{8}$&$\frac{3}{8}$&$\frac{3}{8}$&$\frac{1}{8}$\\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+	\begin{align*}
+		\mathbb E(X)&=\sum_{\text{all }x}(x\times p(x))\\
+		&=0\times\frac{1}{8}+1\times\frac{3}{8}+2\times\frac{3}{8}+3\times\frac{1}{8}\\
+		&=\frac{12}{8}\\
+		&=1.5
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Example}
+	\begin{center}
+		\begin{tabular}{ccccc}
+			\toprule
+			$x$&0&1&2&3\\
+			\toprule
+			$p(x)$&$\frac{1}{8}$&$\frac{3}{8}$&$\frac{3}{8}$&$\frac{1}{8}$\\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+	\begin{align*}
+		\mathbb E(X^2)&=\sum_{\text{all }x}(x^2\times p(x))\\
+		&=0^2\times\frac{1}{8}+1^2\times\frac{3}{8}+2^2\times\frac{3}{8}+3^2\times\frac{1}{8}\\
+		&=\frac{24}{8}\\
+		&=3
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Laws of Expected Value}
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] If $X$ and $Y$ are random variables (discrete or continuous) and $c$ is any constant, then:
+		\begin{align*}
+			1. & \quad \E(c)=c \\
+			2. & \quad \E(cX)=c\E[X]\\
+			3. & \quad \E(X+Y)=\E(X)+\E(Y)\\
+			4. & \quad \E(X-Y)=\E(X)-\E(Y)\\
+		\end{align*}
+		\item[\color{blue}$\blacktriangleright$] And if $X$ and $Y$ are independent, then:
+		$$5. \quad \E(XY)=\E(X)\times \E(Y)$$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Example}
+	\begin{itemize}
+		\item[\color{blue}$\blacktriangleright$] Let $Z = 3X + 2Y - 2XY + 3$ with $\E(X) = 3, \E(Y) = 5$ and $X$ and $Y$ independent. Then:
+	\end{itemize}
+
+\begin{align*}
+\E(Z) &= \E(3X + 2Y - 2XY + 3)\\
+&= \E(3X) + \E(2Y) - \E(2XY) + \E(3)\\
+&= 3\E(X) + 2\E(Y) - 2\E(X)\E(Y) + 3\\
+&= 3 \times 3 + 2 \times 5 - 2 \times 3 \times 5 + 3\\
+&= -8
+\end{align*}
+\end{frame}
+
+
+\end{document}

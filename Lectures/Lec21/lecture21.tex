@@ -1,0 +1,162 @@
+\documentclass[12pt]{beamer}
+\usetheme{Boadilla}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{tikz}
+
+\newcommand{\E}{\mathbb{E}}
+\usefonttheme{professionalfonts}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\renewcommand{\arraystretch}{1.25}
+\usetikzlibrary{trees}
+\title[ECON2843]{Lecture 21}
+\subtitle{Part 4 Analysis of Variance}
+\date{}
+\usepackage{amsmath,amssymb,mathtools,wasysym}
+\begin{document}
+	\begin{frame}
+		\titlepage
+		
+	\end{frame}
+	\begin{frame}
+		\vspace{1cm}
+		\centering
+		{\color{blue}\large Relationship between Chi-squared Test and F Test}
+	\end{frame}
+
+\begin{frame}{Another Way to Define Chi-squared Distribution and Test}
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item Let $Z_1, Z_2, \ldots, Z_k$ being independent and identically distributed and follow $N(0,1)$
+		$$\Rightarrow X^2 \equiv Z_1^2 + Z_2^2 + \ldots + Z_k^2 \sim \chi_k^2.$$
+		\item Specifically, if $k= 1,$
+		$$Z^2 \sim \chi_1^2.$$
+\end{itemize}
+\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+	\item Chi-squared statistic: $\chi^2 = \sum_{i=1}^k \frac{(O_i - E_i)^2}{E_i}$
+	\item Where:
+	\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+		\item $O_i$ are observed frequencies
+		\item $E_i$ are expected frequencies
+	\end{itemize}
+	\item Under $H_0$: $\chi^2 \sim \chi^2_{k-1}$
+\end{itemize}
+\end{frame}
+	\begin{frame}
+		\frametitle{Recall How F-test is Defined}
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item F-test statistic:
+			$$F = \frac{S_1^2/(k_1-1)}{S_2^2/(k_2-1)}$$
+			\item Where:
+			\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+				\item $S_1^2, S_2^2$ are sample variances
+				\item $k_1-1, k_2-1$ are degrees of freedom
+			\end{itemize}
+			\item Under $H_0$: $F \sim F_{k_1-1,k_2-1}$
+		\end{itemize}
+	\end{frame}
+	
+
+	\begin{frame}
+		\frametitle{Mathematical Connection}
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Key relationship here:
+			$$F = \frac{\chi^2_1/(k_1-1)}{\chi^2_2/(k_2-1)}$$
+			\item Where:
+			\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+				\item $\chi^2_1 \sim \chi^2_{k_1-1}$
+				\item $\chi^2_2 \sim \chi^2_{k_2-1}$
+				\item $\chi^2_1$ and $\chi^2_2$ are independent
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+\begin{frame}
+	\frametitle{Fisher's F-statistic}
+	F-statistics is invented by and named after Sir Ronald Fisher.
+	\vspace{0.5cm}
+	
+	The original concern of Fisher is to construct a \textbf{statistic} which has a sampling 
+	distribution, in some extent, free from the degrees of freedom $a$ and $b$ \textit{under 
+		the null hypothesis}.
+
+	
+\end{frame}
+\begin{frame}
+	\frametitle{Fisher's F-statistic}
+With this concern, he presented his F-statistic in a way that:
+\vspace{0.5cm}
+
+Since $\chi^2_a$ has expectation $a$, so the numerator $\chi^2_a/a$ has expectation 1; 
+\vspace{0.5cm}
+
+similarly, the denominator also has expectation 1.
+\vspace{0.7cm}
+
+As Fisher said, \textbf{the value of F-statistic will fluctuate near 1 under the null hypothesis} $H_0: \mu_1 = 
+\cdots = \mu_k$ (if $k = a + 1$).
+\end{frame}
+	\begin{frame}
+		\frametitle{Recall One-Way ANOVA We Have Learned}
+		In one-way ANOVA:
+		\begin{align*}
+			F &= \frac{\text{Between-group variability}}{\text{Within-group variability}} \\
+			&= \frac{\chi^2_{\text{between}}/(k-1)}{\chi^2_{\text{within}}/(N-k)}
+		\end{align*}
+		Where:
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item $k$ is number of groups
+			\item $N$ is total sample size
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Applications}
+		\begin{enumerate}[label={\color{blue}$\blacktriangleright$}]
+			\item Variance Comparison
+			\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+				\item F-test for comparing two variances
+				\item Multiple $\chi^2$ tests for multiple variances
+			\end{itemize}
+			\item Model Comparison
+			\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+				\item F-test in regression analysis
+				\item $\chi^2$ test for nested models
+			\end{itemize}
+		\end{enumerate}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Practical Implications}
+		\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+			\item Understanding the relationship helps in:
+			\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+				\item Test selection
+				\item Result interpretation
+				\item Statistical power considerations
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+		\begin{frame}
+		\vspace{1cm}
+		\centering
+		{\color{blue}\large Relationship between $t$ Test and F Test}
+	\end{frame}
+	
+\begin{frame}{Relationship between $t$ Test and F Test}
+\begin{itemize}[label={\color{blue}$\blacktriangleright$}]
+	\item All under the assumption that null hypothesis is true
+\end{itemize}
+\begin{align*}
+t_{k-1}&=\frac{Z}{\sqrt{S^2/(k-1)}}\\
+&= \frac{Z}{\sqrt{\chi_{k-1}^2/(k-1)}}\\
+&= \frac{\sqrt{\chi^2_1/1}}{\sqrt{\chi_{k-1}^2/(k-1)}}=\sqrt{\frac{\chi^2_1/1}{\chi_{k-1}^2/(k-1)}}\\
+&= \sqrt{F_{1,k-1}}
+\end{align*}
+Or, in other words, 
+$$t^2_{k-1} = F_{1,k-1}.$$
+
+	
+\end{frame}
+			
+\end{document}
