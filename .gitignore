@@ -17,3 +17,7 @@
 *.bcf
 *.xml
 *.iml
+*.vrb
+*.nav
+*.snm
+*.toc
